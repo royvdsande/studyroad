@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Binas</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --success: #10b981;
+      --success-bg: #d1fae5;
+      --danger: #ef4444;
+      --danger-bg: #fee2e2;
+      --warning: #f59e0b;
+      --warning-bg: #fef3c7;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .card-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin: 4px 0 0 0;
+    }
+    
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .status-badge.success {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    
+    .status-badge.danger {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+    
+    .status-badge.warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+    }
+    
+    .form-group {
+      margin-bottom: 16px;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    
+    .form-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.15s;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    button {
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    
+    .btn-secondary {
+      background: var(--card-bg);
+      color: var(--text);
+      border-color: var(--border);
+    }
+    
+    .btn-secondary:hover {
+      background: var(--bg);
+    }
+    
+    .btn-success {
+      background: var(--success);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background: #059669;
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background: #dc2626;
+    }
+    
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+    
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    
+    .divider {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+    
+    .admin-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .admin-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .admin-list-item.primary {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+    
+    .admin-list-item.clickable:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    
+    .admin-list-item.primary.clickable:hover {
+      background: #dbeafe;
+    }
+    
+    .admin-info {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .admin-email {
+      font-weight: 500;
+    }
+    
+    .admin-role {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    
+    .add-admin-form {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    
+    .add-admin-form input {
+      flex: 1;
+    }
+    
+    .message {
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    
+    .message.success {
+      background: var(--success-bg);
+      color: var(--success);
+    }
+    
+    .message.error {
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+    
+    .login-container {
+      max-width: 400px;
+      margin: 60px auto;
+    }
+    
+    .login-container .card {
+      text-align: center;
+    }
+    
+    .login-container h2 {
+      margin: 0 0 8px 0;
+    }
+    
+    .login-container p {
+      color: var(--text-muted);
+      margin: 0 0 24px 0;
+    }
+    
+    .login-container input {
+      margin-bottom: 12px;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
+    }
+    
+    .tab {
+      padding: 10px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-bottom: -1px;
+    }
+    
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .tab:hover:not(.active) {
+      color: var(--text);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    .info-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 13px;
+      color: #0369a1;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 12px;
+      }
+      
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .button-row {
+        flex-direction: column;
+      }
+      
+      .add-admin-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Section -->
+  <div id="auth-section" class="login-container">
+    <div class="card">
+      <h2>Admin Panel</h2>
+      <p>Log in om toegang te krijgen</p>
+      <button id="btn-login-google" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; margin-bottom: 16px;">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.84.81-.58z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Inloggen met Google
+      </button>
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px;">
+        <div style="flex: 1; height: 1px; background: var(--border);"></div>
+        <span style="font-size: 11px; color: var(--text-muted); font-weight: 500;">OF VIA EMAIL</span>
+        <div style="flex: 1; height: 1px; background: var(--border);"></div>
+      </div>
+      <input type="email" id="email" placeholder="Admin e-mailadres">
+      <input type="password" id="password" placeholder="Wachtwoord" style="margin-top: 8px;">
+
+      <div class="button-row" style="margin-top: 16px;">
+        <button id="login-password-btn" class="btn-primary" style="flex: 1;">Inloggen</button>
+        <button id="login-link-btn" class="btn-secondary" style="flex: 1;">Magic Link</button>
+      </div>
+
+      <div id="message" class="message" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Admin Content -->
+  <div id="admin-content" class="container" hidden>
+    <div class="header">
+      <div>
+        <h1>Admin Dashboard</h1>
+        <p style="margin: 4px 0 0 0; color: var(--text-muted);">Ingelogd als: <strong id="user-email"></strong></p>
+      </div>
+      <div style="display: flex; gap: 10px; align-items: center;">
+        <a href="/" class="btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; height: 38px;">← Terug naar App</a>
+        <button id="logout-btn" class="btn-secondary">Uitloggen</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="config">Configuratie</button>
+      <button class="tab" data-tab="plus">Mijn Plus Status</button>
+      <button class="tab" data-tab="users">Gebruikers Beheer</button>
+    </div>
+
+    <!-- Config Tab -->
+    <div id="tab-config" class="tab-content active">
+      <!-- Global Config Card -->
+      <div class="card" style="border-left: 4px solid #f59e0b;">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Globale Instellingen (Firestore)</h3>
+            <p class="card-subtitle">Deze instellingen gelden voor <strong>ALLE</strong> gebruikers</p>
+          </div>
+          <span id="global-status-badge" class="status-badge">Laden...</span>
+        </div>
+
+        <div class="info-box" style="background: #fff1f2; border-color: #fecdd3; color: #9f1239;">
+           ⚠️ <strong>Let op:</strong> Wijzigingen hier worden opgeslagen in de database en hebben direct effect op alle gebruikers van de app.
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="global-enable-plus">
+              <label for="global-enable-plus" style="font-weight: 600;">Binas Plus Systeem Inschakelen</label>
+            </div>
+            <p class="form-hint" style="margin-left: 26px;">
+               <strong>AAN (aangevinkt):</strong> Normaal gedrag. Gebruikers moeten betalen voor Plus functies.<br>
+               <strong>UIT (uitgevinkt):</strong> Iedereen heeft Plus functies gratis. Geen upsells, geen gouden UI. Instellingen links verborgen.
+            </p>
+        </div>
+
+        <div class="button-row">
+           <button id="save-global-config-btn" class="btn-primary">Opslaan naar Firestore</button>
+        </div>
+        <div id="global-config-message" class="message" style="display: none;"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Lokale App Configuratie</h3>
+            <p class="card-subtitle">Deze instellingen worden lokaal opgeslagen en overschrijven config.js</p>
+          </div>
+        </div>
+        
+        <div class="info-box">
+          💡 Wijzigingen hier worden opgeslagen in je browser en overschrijven de standaard config.js waarden. 
+          Dit is handig voor testen zonder de broncode aan te passen.
+        </div>
+
+        <form id="config-form">
+          <div class="form-group">
+            <label class="form-label">Versie</label>
+            <input type="text" id="config-version" placeholder="Versie 1.0.0">
+            <p class="form-hint">Wordt getoond in het instellingen menu</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Copyright</label>
+            <input type="text" id="config-copyright" placeholder="© 2025 Binas.app">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Prijs Display</label>
+            <input type="text" id="config-price" placeholder="1,49">
+            <p class="form-hint">De prijs die wordt getoond voor Binas Plus (zonder €)</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Originele Prijs (doorgestreept)</label>
+            <input type="text" id="config-original-price" placeholder="2,99">
+            <p class="form-hint">De "oude" prijs die doorgestreept wordt getoond (zonder €)</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Kortingspercentage</label>
+            <input type="text" id="config-discount" placeholder="50">
+            <p class="form-hint">Het percentage korting dat getoond wordt (zonder %)</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Stripe Price ID</label>
+            <input type="text" id="config-stripe-id" placeholder="price_1SmVggLzjWXxGtsShYIXmRVx">
+            <p class="form-hint">Het Stripe product ID voor betalingen</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Firebase Auth Domein</label>
+            <input type="text" id="config-auth-domain" placeholder="account.binas.app">
+            <p class="form-hint">Het custom domein dat Firebase Auth gebruikt</p>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="config-show-credit">
+              <label for="config-show-credit">Toon "Gemaakt door Roy van der Sande" credit</label>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="button-row">
+            <button type="submit" class="btn-primary">Opslaan</button>
+            <button type="button" id="reset-config" class="btn-secondary">Reset naar Defaults</button>
+          </div>
+        </form>
+
+        <div id="config-message" class="message" style="display: none;"></div>
+      </div>
+    </div>
+
+    <!-- Plus Status Tab -->
+    <div id="tab-plus" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Mijn Binas Plus Status</h3>
+            <p class="card-subtitle">Beheer je eigen Plus abonnement</p>
+          </div>
+          <span id="plus-status-badge" class="status-badge">Laden...</span>
+        </div>
+
+        <p style="color: var(--text-muted); margin-bottom: 16px;">
+          Als admin kun je je eigen Plus status handmatig activeren of deactiveren voor test doeleinden.
+        </p>
+
+        <div class="button-row">
+          <button id="activate-btn" class="btn-success">Activeer Plus</button>
+          <button id="deactivate-btn" class="btn-danger">Deactiveer Plus</button>
+        </div>
+
+        <div id="plus-message" class="message" style="display: none;"></div>
+      </div>
+    </div>
+
+    <!-- Users Management Tab -->
+    <div id="tab-users" class="tab-content">
+      <!-- Manual Plus Assignment Card -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Plus Toekennen</h3>
+            <p class="card-subtitle">Ken BiNaS Plus toe aan een gebruiker via e-mail of UID</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">E-mailadres of User ID</label>
+          <div class="add-admin-form">
+            <input type="text" id="grant-plus-input" placeholder="email@example.com of user-uid">
+            <button id="grant-plus-btn" class="btn-success">Plus Geven</button>
+          </div>
+          <p class="form-hint">Voer een e-mailadres of Firebase UID in om direct Plus toe te kennen</p>
+        </div>
+
+        <div id="grant-plus-message" class="message" style="display: none;"></div>
+      </div>
+
+      <!-- Plus Users Overview -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">BiNaS Plus Gebruikers</h3>
+            <p class="card-subtitle">Alle gebruikers met een actief Plus abonnement</p>
+          </div>
+          <button id="refresh-plus-users" class="btn-secondary btn-sm">🔄 Vernieuwen</button>
+        </div>
+
+        <div id="plus-users-loading" class="info-box">
+          ⏳ Plus gebruikers laden...
+        </div>
+
+        <ul class="admin-list" id="plus-users-list" style="display: none;">
+        </ul>
+
+        <div id="plus-users-empty" class="info-box" style="display: none;">
+          Geen Plus gebruikers gevonden.
+        </div>
+      </div>
+
+      <!-- All Users Overview -->
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3 class="card-title">Alle Gebruikers</h3>
+            <p class="card-subtitle">Overzicht van alle geregistreerde gebruikers</p>
+          </div>
+          <button id="refresh-all-users" class="btn-secondary btn-sm">🔄 Vernieuwen</button>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <input type="text" id="users-search" placeholder="Zoek op e-mail...">
+        </div>
+
+        <div id="all-users-loading" class="info-box">
+          ⏳ Gebruikers laden...
+        </div>
+
+        <ul class="admin-list" id="all-users-list" style="display: none;">
+        </ul>
+
+        <div id="all-users-empty" class="info-box" style="display: none;">
+          Geen gebruikers gevonden.
+        </div>
+
+        <div id="users-message" class="message" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { 
+      getAuth, 
+      signInWithEmailLink, 
+      sendSignInLinkToEmail, 
+      onAuthStateChanged, 
+      signOut, 
+      isSignInWithEmailLink,
+      GoogleAuthProvider,
+      signInWithPopup,
+      signInWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { 
+      getFirestore, 
+      doc, 
+      setDoc, 
+      getDoc,
+      deleteDoc, 
+      collection, 
+      getDocs, 
+      serverTimestamp, 
+      query, 
+      where 
+    } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+    import BINAS_CONFIG from './config.js';
+
+    const LOCAL_CONFIG_KEY = 'binas:admin-config-override';
+
+    function getMergedConfig() {
+      let config = BINAS_CONFIG || {};
+      const localConfig = localStorage.getItem(LOCAL_CONFIG_KEY);
+      if (localConfig) {
+        try {
+          config = { ...config, ...JSON.parse(localConfig) };
+        } catch (e) {
+          console.error('Error parsing local config:', e);
+        }
+      }
+      return config;
+    }
+
+    const runtimeConfig = getMergedConfig();
+    const firebaseAuthDomain = runtimeConfig.authDomain || 'account.binas.app';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBgXo3zllXtFJZDn4elpY8DemEQG_ltMk0",
+      authDomain: firebaseAuthDomain,
+      projectId: "binas-91a32",
+      storageBucket: "binas-91a32.firebasestorage.app",
+      messagingSenderId: "971498903694",
+      appId: "1:971498903694:web:5ab8b630b183f5204ed1df",
+      measurementId: "G-1LLBGZNRNC",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    // Primary admin who can manage other admins
+    const PRIMARY_ADMIN = runtimeConfig.primaryAdmin || "vandersanderoy@hotmail.com";
+
+    // Elements
+    const authSection = document.getElementById('auth-section');
+    const adminContent = document.getElementById('admin-content');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginLinkBtn = document.getElementById('login-link-btn');
+    const loginPasswordBtn = document.getElementById('login-password-btn');
+    const btnLoginGoogle = document.getElementById('btn-login-google');
+    const msg = document.getElementById('message');
+    const userEmailSpan = document.getElementById('user-email');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // Tab elements
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    // Config form elements
+    const configForm = document.getElementById('config-form');
+    const configVersion = document.getElementById('config-version');
+
+    // Global config elements
+    const globalEnablePlus = document.getElementById('global-enable-plus');
+    const saveGlobalConfigBtn = document.getElementById('save-global-config-btn');
+    const globalConfigMessage = document.getElementById('global-config-message');
+    const globalStatusBadge = document.getElementById('global-status-badge');
+    const configCopyright = document.getElementById('config-copyright');
+    const configPrice = document.getElementById('config-price');
+    const configOriginalPrice = document.getElementById('config-original-price');
+    const configDiscount = document.getElementById('config-discount');
+    const configStripeId = document.getElementById('config-stripe-id');
+    const configAuthDomain = document.getElementById('config-auth-domain');
+    const configShowCredit = document.getElementById('config-show-credit');
+    const resetConfigBtn = document.getElementById('reset-config');
+    const configMessage = document.getElementById('config-message');
+
+    // Plus status elements
+    const plusStatusBadge = document.getElementById('plus-status-badge');
+    const activateBtn = document.getElementById('activate-btn');
+    const deactivateBtn = document.getElementById('deactivate-btn');
+    const plusMessage = document.getElementById('plus-message');
+
+    // Users management elements
+    const grantPlusInput = document.getElementById('grant-plus-input');
+    const grantPlusBtn = document.getElementById('grant-plus-btn');
+    const grantPlusMessage = document.getElementById('grant-plus-message');
+    const plusUsersList = document.getElementById('plus-users-list');
+    const plusUsersLoading = document.getElementById('plus-users-loading');
+    const plusUsersEmpty = document.getElementById('plus-users-empty');
+    const allUsersList = document.getElementById('all-users-list');
+    const allUsersLoading = document.getElementById('all-users-loading');
+    const allUsersEmpty = document.getElementById('all-users-empty');
+    const usersSearch = document.getElementById('users-search');
+    const usersMessage = document.getElementById('users-message');
+    const refreshPlusUsersBtn = document.getElementById('refresh-plus-users');
+    const refreshAllUsersBtn = document.getElementById('refresh-all-users');
+
+    // --- Tab Navigation ---
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(tc => tc.classList.remove('active'));
+        
+        tab.classList.add('active');
+        document.getElementById(`tab-${tab.dataset.tab}`).classList.add('active');
+      });
+    });
+
+    // --- Helper Functions ---
+    function showMessage(element, text, isError = false) {
+      element.textContent = text;
+      element.className = `message ${isError ? 'error' : 'success'}`;
+      element.style.display = 'block';
+      setTimeout(() => element.style.display = 'none', 5000);
+    }
+
+    // --- Auth Handling ---
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      let email = window.localStorage.getItem('adminEmail');
+      if (!email) {
+        email = window.prompt('Vul je email in ter bevestiging');
+      }
+      signInWithEmailLink(auth, email, window.location.href)
+        .then(() => {
+          window.history.replaceState({}, '', window.location.pathname);
+          window.localStorage.removeItem('adminEmail');
+        })
+        .catch((e) => {
+          showMessage(msg, e.message, true);
+        });
+    }
+
+    loginLinkBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      if (!email) {
+        showMessage(msg, "Vul een e-mailadres in", true);
+        return;
+      }
+      
+      // Check if user is an admin
+      const isAdmin = await checkIsAdmin(email);
+      if (!isAdmin) {
+        showMessage(msg, "Dit e-mailadres heeft geen admin toegang", true);
+        return;
+      }
+      
+      try {
+        await sendSignInLinkToEmail(auth, email, {
+          url: window.location.href,
+          handleCodeInApp: true
+        });
+        window.localStorage.setItem('adminEmail', email);
+        showMessage(msg, "Link verstuurd! Check je e-mail.");
+      } catch (e) {
+        showMessage(msg, e.message, true);
+      }
+    });
+
+    loginPasswordBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!email || !password) {
+        showMessage(msg, "Vul e-mail en wachtwoord in", true);
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (e) {
+        showMessage(msg, e.message, true);
+      }
+    });
+
+    btnLoginGoogle.addEventListener('click', async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (e) {
+        showMessage(msg, e.message, true);
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => signOut(auth));
+
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const email = user.email;
+        const isAdmin = await checkIsAdmin(email);
+        
+        if (!isAdmin) {
+          showMessage(msg, "Geen admin toegang voor dit account.");
+          signOut(auth);
+          return;
+        }
+        
+        authSection.hidden = true;
+        adminContent.hidden = false;
+        userEmailSpan.textContent = email;
+        
+        // Load all data
+        loadConfig();
+        loadGlobalConfig();
+        checkPlusStatus(user);
+        loadPlusUsers();
+        loadAllUsers();
+      } else {
+        authSection.hidden = false;
+        adminContent.hidden = true;
+      }
+    });
+
+    // --- Admin Check ---
+    async function checkIsAdmin(email) {
+      // Primary admin always has access
+      if (email === PRIMARY_ADMIN) return true;
+      
+      // Check Firestore for other admins
+      try {
+        const adminDoc = await getDoc(doc(db, 'admins', email));
+        return adminDoc.exists();
+      } catch (e) {
+        console.error('Error checking admin status:', e);
+        return false;
+      }
+    }
+
+    // --- Config Management ---
+    function loadConfig() {
+      const config = getMergedConfig();
+      
+      configVersion.value = config.version || '';
+      configCopyright.value = config.copyright || '';
+      configPrice.value = config.priceDisplay || '';
+      configOriginalPrice.value = config.originalPrice || '';
+      configDiscount.value = config.discountPercentage || '';
+      configStripeId.value = config.stripePriceId || '';
+      configAuthDomain.value = config.authDomain || '';
+      configShowCredit.checked = config.showCredit || false;
+    }
+
+    configForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const configOverride = {
+        version: configVersion.value,
+        copyright: configCopyright.value,
+        priceDisplay: configPrice.value,
+        originalPrice: configOriginalPrice.value,
+        discountPercentage: configDiscount.value,
+        stripePriceId: configStripeId.value,
+        authDomain: configAuthDomain.value,
+        showCredit: configShowCredit.checked
+      };
+      
+      localStorage.setItem(LOCAL_CONFIG_KEY, JSON.stringify(configOverride));
+      showMessage(configMessage, 'Configuratie opgeslagen! Herlaad de app om de wijzigingen te zien.');
+    });
+
+    resetConfigBtn.addEventListener('click', () => {
+      localStorage.removeItem(LOCAL_CONFIG_KEY);
+      loadConfig();
+      showMessage(configMessage, 'Config gereset naar defaults. Herlaad de app.');
+    });
+
+    // --- Global Config Management ---
+    async function loadGlobalConfig() {
+       globalStatusBadge.textContent = 'Laden...';
+       try {
+           const docRef = doc(db, 'config', 'global');
+           const docSnap = await getDoc(docRef);
+
+           if (docSnap.exists()) {
+               const data = docSnap.data();
+               // Default to false (off) if undefined, matching config.js
+               globalEnablePlus.checked = data.enableBinasPlus === true;
+
+               globalStatusBadge.textContent = 'Geladen';
+               globalStatusBadge.className = 'status-badge success';
+           } else {
+               globalStatusBadge.textContent = 'Niet ingesteld (Default: Uit)';
+               globalStatusBadge.className = 'status-badge warning';
+               globalEnablePlus.checked = false;
+           }
+       } catch(e) {
+           console.error('Error loading global config', e);
+           globalStatusBadge.textContent = 'Fout';
+           globalStatusBadge.className = 'status-badge danger';
+       }
+    }
+
+    saveGlobalConfigBtn.addEventListener('click', async () => {
+        try {
+            const docRef = doc(db, 'config', 'global');
+            await setDoc(docRef, {
+                enableBinasPlus: globalEnablePlus.checked
+            }, { merge: true });
+
+            showMessage(globalConfigMessage, 'Globale instellingen opgeslagen!');
+            loadGlobalConfig();
+        } catch(e) {
+            showMessage(globalConfigMessage, 'Fout bij opslaan: ' + e.message, true);
+        }
+    });
+
+    // --- Plus Status Management ---
+    async function checkPlusStatus(user) {
+      plusStatusBadge.textContent = 'Laden...';
+      plusStatusBadge.className = 'status-badge';
+      
+      try {
+        const q = query(
+          collection(db, 'customers', user.uid, 'subscriptions'), 
+          where('status', 'in', ['active', 'trialing'])
+        );
+        const snap = await getDocs(q);
+        
+        if (!snap.empty) {
+          plusStatusBadge.textContent = 'Plus Actief ✅';
+          plusStatusBadge.classList.add('success');
+          activateBtn.disabled = true;
+          deactivateBtn.disabled = false;
+        } else {
+          plusStatusBadge.textContent = 'Geen Plus ❌';
+          plusStatusBadge.classList.add('danger');
+          activateBtn.disabled = false;
+          deactivateBtn.disabled = true;
+        }
+      } catch (e) {
+        plusStatusBadge.textContent = 'Fout bij laden';
+        plusStatusBadge.classList.add('warning');
+      }
+    }
+
+    activateBtn.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      try {
+        const subRef = doc(collection(db, 'customers', user.uid, 'subscriptions'));
+        await setDoc(subRef, {
+          status: 'active',
+          created: serverTimestamp(),
+          role: 'admin-override'
+        });
+        showMessage(plusMessage, 'Plus geactiveerd!');
+        checkPlusStatus(user);
+      } catch (e) {
+        showMessage(plusMessage, 'Fout: ' + e.message, true);
+      }
+    });
+
+    deactivateBtn.addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      try {
+        const q = query(collection(db, 'customers', user.uid, 'subscriptions'));
+        const snap = await getDocs(q);
+        await Promise.all(snap.docs.map(docSnapshot => deleteDoc(docSnapshot.ref)));
+        showMessage(plusMessage, 'Plus gedeactiveerd!');
+        checkPlusStatus(user);
+      } catch (e) {
+        showMessage(plusMessage, 'Fout: ' + e.message, true);
+      }
+    });
+
+    // --- Users Management ---
+    let allUsersCache = [];
+
+    async function loadPlusUsers() {
+      plusUsersLoading.style.display = 'block';
+      plusUsersList.style.display = 'none';
+      plusUsersEmpty.style.display = 'none';
+      plusUsersList.innerHTML = '';
+      
+      try {
+        // Get all customers and their subscriptions
+        const customersSnap = await getDocs(collection(db, 'customers'));
+        let plusUsers = [];
+        
+        for (const customerDoc of customersSnap.docs) {
+          const uid = customerDoc.id;
+          const customerData = customerDoc.data();
+          
+          // Check for active subscriptions
+          const subsQuery = query(
+            collection(db, 'customers', uid, 'subscriptions'),
+            where('status', 'in', ['active', 'trialing'])
+          );
+          const subsSnap = await getDocs(subsQuery);
+          
+          if (!subsSnap.empty) {
+            plusUsers.push({
+              uid,
+              email: customerData.email || 'Onbekend',
+              subscriptionCount: subsSnap.size
+            });
+          }
+        }
+        
+        plusUsersLoading.style.display = 'none';
+        
+        if (plusUsers.length === 0) {
+          plusUsersEmpty.style.display = 'block';
+          return;
+        }
+        
+        plusUsersList.style.display = 'block';
+        
+        plusUsers.forEach(user => {
+          const item = document.createElement('li');
+          item.className = 'admin-list-item primary';
+          item.innerHTML = `
+            <div class="admin-info">
+              <span class="admin-email">${user.email}</span>
+              <span class="admin-role">UID: ${user.uid}</span>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <span class="status-badge success">Plus ✓</span>
+              <button class="btn-danger btn-sm revoke-plus-btn" data-uid="${user.uid}" data-email="${user.email}">Intrekken</button>
+            </div>
+          `;
+          plusUsersList.appendChild(item);
+        });
+        
+        // Add event listeners for revoke buttons
+        plusUsersList.querySelectorAll('.revoke-plus-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const uid = btn.dataset.uid;
+            const email = btn.dataset.email;
+            if (confirm(`Weet je zeker dat je Plus wilt intrekken voor ${email}?`)) {
+              await revokePlus(uid);
+            }
+          });
+        });
+        
+      } catch (e) {
+        console.error('Error loading plus users:', e);
+        plusUsersLoading.style.display = 'none';
+        plusUsersEmpty.textContent = 'Fout bij laden van Plus gebruikers.';
+        plusUsersEmpty.style.display = 'block';
+      }
+    }
+
+    async function loadAllUsers() {
+      allUsersLoading.style.display = 'block';
+      allUsersList.style.display = 'none';
+      allUsersEmpty.style.display = 'none';
+      allUsersList.innerHTML = '';
+      allUsersCache = [];
+      
+      try {
+        const customersSnap = await getDocs(collection(db, 'customers'));
+        
+        for (const customerDoc of customersSnap.docs) {
+          const uid = customerDoc.id;
+          const customerData = customerDoc.data();
+          
+          // Check for active subscriptions
+          const subsQuery = query(
+            collection(db, 'customers', uid, 'subscriptions'),
+            where('status', 'in', ['active', 'trialing'])
+          );
+          const subsSnap = await getDocs(subsQuery);
+          
+          allUsersCache.push({
+            uid,
+            email: customerData.email || 'Onbekend',
+            hasPlus: !subsSnap.empty
+          });
+        }
+        
+        allUsersLoading.style.display = 'none';
+        renderAllUsers(allUsersCache);
+        
+      } catch (e) {
+        console.error('Error loading users:', e);
+        allUsersLoading.style.display = 'none';
+        allUsersEmpty.textContent = 'Fout bij laden van gebruikers.';
+        allUsersEmpty.style.display = 'block';
+      }
+    }
+
+    function renderAllUsers(users) {
+      allUsersList.innerHTML = '';
+      
+      if (users.length === 0) {
+        allUsersList.style.display = 'none';
+        allUsersEmpty.style.display = 'block';
+        return;
+      }
+      
+      allUsersEmpty.style.display = 'none';
+      allUsersList.style.display = 'block';
+      
+      users.forEach(user => {
+        const item = document.createElement('li');
+        item.className = `admin-list-item ${user.hasPlus ? 'primary' : ''}`;
+        item.style.cursor = 'pointer';
+        item.innerHTML = `
+          <div class="admin-info">
+            <span class="admin-email">${user.email}</span>
+            <span class="admin-role">UID: ${user.uid}</span>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            ${user.hasPlus 
+              ? `<span class="status-badge success">Plus ✓</span>
+                 <button class="btn-danger btn-sm revoke-btn" data-uid="${user.uid}" data-email="${user.email}">Intrekken</button>`
+              : `<button class="btn-success btn-sm grant-btn" data-uid="${user.uid}" data-email="${user.email}">Plus Geven</button>`
+            }
+          </div>
+        `;
+        allUsersList.appendChild(item);
+      });
+      
+      // Add event listeners
+      allUsersList.querySelectorAll('.grant-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const uid = btn.dataset.uid;
+          const email = btn.dataset.email;
+          if (confirm(`Plus toekennen aan ${email}?`)) {
+            await grantPlus(uid);
+          }
+        });
+      });
+      
+      allUsersList.querySelectorAll('.revoke-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.stopPropagation();
+          const uid = btn.dataset.uid;
+          const email = btn.dataset.email;
+          if (confirm(`Plus intrekken voor ${email}?`)) {
+            await revokePlus(uid);
+          }
+        });
+      });
+    }
+
+    // Search functionality
+    usersSearch.addEventListener('input', () => {
+      const searchTerm = usersSearch.value.trim().toLowerCase();
+      if (!searchTerm) {
+        renderAllUsers(allUsersCache);
+        return;
+      }
+      
+      const filtered = allUsersCache.filter(user => 
+        user.email.toLowerCase().includes(searchTerm) ||
+        user.uid.toLowerCase().includes(searchTerm)
+      );
+      renderAllUsers(filtered);
+    });
+
+    // Grant Plus to a user by UID
+    async function grantPlus(uid) {
+      try {
+        const subRef = doc(collection(db, 'customers', uid, 'subscriptions'));
+        await setDoc(subRef, {
+          status: 'active',
+          created: serverTimestamp(),
+          role: 'admin-granted'
+        });
+        showMessage(usersMessage, 'Plus succesvol toegekend!');
+        loadPlusUsers();
+        loadAllUsers();
+      } catch (e) {
+        showMessage(usersMessage, 'Fout: ' + e.message, true);
+      }
+    }
+
+    // Revoke Plus from a user
+    async function revokePlus(uid) {
+      try {
+        const subsSnap = await getDocs(collection(db, 'customers', uid, 'subscriptions'));
+        await Promise.all(subsSnap.docs.map(docSnapshot => deleteDoc(docSnapshot.ref)));
+        showMessage(usersMessage, 'Plus succesvol ingetrokken!');
+        loadPlusUsers();
+        loadAllUsers();
+      } catch (e) {
+        showMessage(usersMessage, 'Fout: ' + e.message, true);
+      }
+    }
+
+    // Grant Plus via input (email or UID)
+    grantPlusBtn.addEventListener('click', async () => {
+      const input = grantPlusInput.value.trim();
+      if (!input) {
+        showMessage(grantPlusMessage, 'Vul een e-mailadres of UID in', true);
+        return;
+      }
+      
+      try {
+        let targetUid = null;
+        
+        // Check if input is an email or UID
+        if (input.includes('@')) {
+          // Search for user by email in customers collection
+          const customersSnap = await getDocs(collection(db, 'customers'));
+          for (const customerDoc of customersSnap.docs) {
+            const data = customerDoc.data();
+            if (data.email && data.email.toLowerCase() === input.toLowerCase()) {
+              targetUid = customerDoc.id;
+              break;
+            }
+          }
+          
+          if (!targetUid) {
+            // User not found - create customer document with this email
+            // We'll use a generated ID
+            showMessage(grantPlusMessage, 'Gebruiker niet gevonden. De gebruiker moet eerst inloggen op de app.', true);
+            return;
+          }
+        } else {
+          // Assume it's a UID
+          targetUid = input;
+          
+          // Verify the customer exists
+          const customerDoc = await getDoc(doc(db, 'customers', targetUid));
+          if (!customerDoc.exists()) {
+            showMessage(grantPlusMessage, 'Geen gebruiker gevonden met deze UID.', true);
+            return;
+          }
+        }
+        
+        // Grant plus
+        const subRef = doc(collection(db, 'customers', targetUid, 'subscriptions'));
+        await setDoc(subRef, {
+          status: 'active',
+          created: serverTimestamp(),
+          role: 'admin-granted'
+        });
+        
+        showMessage(grantPlusMessage, 'Plus succesvol toegekend!');
+        grantPlusInput.value = '';
+        loadPlusUsers();
+        loadAllUsers();
+        
+      } catch (e) {
+        showMessage(grantPlusMessage, 'Fout: ' + e.message, true);
+      }
+    });
+
+    // Refresh buttons
+    refreshPlusUsersBtn.addEventListener('click', loadPlusUsers);
+    refreshAllUsersBtn.addEventListener('click', loadAllUsers);
+  </script>
+</body>
+</html>

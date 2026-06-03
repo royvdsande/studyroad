@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FitFlow – Your AI Personal Trainer</title>
+  <meta name="description" content="Get a personalized training and nutrition plan in 60 seconds. Powered by AI, tailored to your goals." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="/css/variables.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="stylesheet" href="/css/responsive.css" />
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav-logo button-reset" href="/">
+      <div class="nav-logo-icon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" fill="white"/></svg>
+      </div>
+      FitFlow
+    </a>
+    <div class="nav-links">
+      <a class="nav-link button-reset nav-link-active" href="/">Home</a>
+      <a class="nav-link button-reset" href="#how-it-works">How it works</a>
+      <a class="nav-link button-reset" href="#features">Features</a>
+      <a class="nav-link button-reset" href="/pricing">Pricing</a>
+    </div>
+    <div class="nav-actions">
+      <div class="nav-auth-skeleton">
+        <div class="skeleton-pill skeleton-pill--link"></div>
+        <div class="skeleton-pill"></div>
+      </div>
+      <a class="nav-link button-reset nav-auth-logged-out hidden" href="/auth/login">Sign in</a>
+      <a class="btn btn-primary nav-auth-logged-out hidden" href="/onboarding/">Get started</a>
+      <a class="btn btn-primary nav-auth-logged-in hidden" href="/app/">Dashboard</a>
+    </div>
+    <button class="nav-burger" id="burger-landing" data-menu-target="menu-landing" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="menu-landing">
+    <a class="mobile-menu-link" style="font-weight:600" href="/">Home</a>
+    <a class="mobile-menu-link" href="#how-it-works">How it works</a>
+    <a class="mobile-menu-link" href="#features">Features</a>
+    <a class="mobile-menu-link" href="/pricing">Pricing</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn-outline btn-full nav-auth-logged-out" href="/auth/login">Log in</a>
+      <a class="btn btn-primary btn-full nav-auth-logged-out" href="/onboarding/">Get started</a>
+      <a class="btn btn-outline btn-full nav-auth-logged-in hidden" href="/app/">Dashboard</a>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var btn = document.getElementById('burger-landing');
+      var menu = document.getElementById('menu-landing');
+      if (!btn || !menu) return;
+      btn.addEventListener('click', function () {
+        var open = !menu.classList.contains('open');
+        menu.classList.toggle('open', open);
+        btn.classList.toggle('open', open);
+      });
+    })();
+  </script>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-floating">
+        <div class="float-icon float-icon--1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </div>
+        <div class="float-icon float-icon--2">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-5"/></svg>
+        </div>
+        <div class="float-icon float-icon--3">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--purple-500)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="float-icon float-icon--4">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--orange-500)" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+      </div>
+
+      <div class="hero-badge">
+        <div class="hero-avatars">
+          <div class="hero-avatar" style="background:#10b981;color:white">J</div>
+          <div class="hero-avatar" style="background:#8b5cf6;color:white">S</div>
+          <div class="hero-avatar" style="background:#f97316;color:white">M</div>
+          <div class="hero-avatar" style="background:#3b82f6;color:white">A</div>
+          <div class="hero-avatar" style="background:#ef4444;color:white">L</div>
+        </div>
+        <span class="star">&#9733;</span><span>Trusted by 10,000+ athletes</span>
+      </div>
+      <h1>Your AI-Powered<br>Personal Trainer</h1>
+      <p>Get a personalized training and nutrition plan in 60 seconds. Tell us your goals, and our AI builds a complete week-by-week program tailored to your body and lifestyle.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-accent btn-lg" href="/onboarding/">Get your free plan &rarr;</a>
+        <a class="btn btn-outline btn-lg" href="/pricing">See pricing &nearr;</a>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how-it-works">
+      <p class="section-label">How it works</p>
+      <h2 class="section-title">Your perfect plan in 3 simple steps</h2>
+      <p class="section-sub">No guesswork. No generic templates. Just science-backed, AI-generated plans built for you.</p>
+      <div class="steps-grid">
+        <div class="step-card anim-on-scroll">
+          <div class="step-number">1</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>Tell us your goal</h3>
+          <p>Lose weight, build muscle, get fitter — pick your path and share basic stats like height, weight, and activity level.</p>
+        </div>
+        <div class="step-card anim-on-scroll" style="animation-delay:.12s">
+          <div class="step-number">2</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12"/><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="2" fill="var(--accent)"/></svg>
+          </div>
+          <h3>AI builds your plan</h3>
+          <p>Our AI analyzes your profile and generates a complete 7-day training schedule and nutrition plan in seconds.</p>
+        </div>
+        <div class="step-card anim-on-scroll" style="animation-delay:.24s">
+          <div class="step-number">3</div>
+          <div class="step-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Train & track progress</h3>
+          <p>Follow your personalized program, track workouts, and get weekly plan updates as you progress toward your goals.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section" id="features">
+      <p class="section-label">Features</p>
+      <h2 class="section-title">Everything you need to reach your goals</h2>
+      <p class="section-sub">Powered by AI, designed for results. FitFlow combines smart technology with fitness science.</p>
+      <div class="features-grid">
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:var(--accent-50);color:var(--accent)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          </div>
+          <h3>AI Training Plans</h3>
+          <p>Complete 7-day workout schedules with exercises, sets, reps, and rest periods tailored to your fitness level.</p>
+        </div>
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:#fef3c7;color:#d97706">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <h3>Custom Nutrition</h3>
+          <p>Daily meal plans with breakfast, lunch, dinner, and snacks — complete with calorie targets and macros.</p>
+        </div>
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:#ede9fe;color:var(--purple-500)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <h3>Progress Tracking</h3>
+          <p>Monitor your journey with visual progress indicators and see how your body transforms week by week.</p>
+        </div>
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:#dbeafe;color:#3b82f6">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
+          </div>
+          <h3>Weekly Updates</h3>
+          <p>Your plan evolves with you. Get fresh training and nutrition adjustments every week to keep improving.</p>
+        </div>
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:#fce7f3;color:#ec4899">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>Science-Backed</h3>
+          <p>Every plan is built on proven exercise science and nutrition principles, optimized by AI for your unique profile.</p>
+        </div>
+        <div class="feature-card anim-on-scroll">
+          <div class="feature-icon" style="background:#f0fdf4;color:var(--green-700)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
+          </div>
+          <h3>Works Everywhere</h3>
+          <p>Access your plans on any device. Train at the gym, at home, or on the go — your program follows you.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PLAN PREVIEW TEASER -->
+    <section class="section teaser-section">
+      <p class="section-label">Preview</p>
+      <h2 class="section-title">See what your plan looks like</h2>
+      <p class="section-sub">Here's a taste of what FitFlow generates. Your full plan is just a few clicks away.</p>
+      <div class="teaser-wrap anim-on-scroll">
+        <div class="teaser-card">
+          <div class="teaser-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Monday — Training Plan</span>
+          </div>
+          <div class="teaser-visible">
+            <div class="teaser-exercise">
+              <div class="teaser-ex-name">Barbell Back Squat</div>
+              <div class="teaser-ex-detail">4 sets &times; 8 reps &bull; 90s rest</div>
+            </div>
+            <div class="teaser-exercise">
+              <div class="teaser-ex-name">Romanian Deadlift</div>
+              <div class="teaser-ex-detail">3 sets &times; 10 reps &bull; 75s rest</div>
+            </div>
+            <div class="teaser-exercise">
+              <div class="teaser-ex-name">Walking Lunges</div>
+              <div class="teaser-ex-detail">3 sets &times; 12 reps &bull; 60s rest</div>
+            </div>
+          </div>
+          <div class="teaser-blurred">
+            <div class="teaser-exercise"><div class="teaser-ex-name">Leg Press</div><div class="teaser-ex-detail">3 sets &times; 12 reps &bull; 60s rest</div></div>
+            <div class="teaser-exercise"><div class="teaser-ex-name">Calf Raises</div><div class="teaser-ex-detail">4 sets &times; 15 reps &bull; 45s rest</div></div>
+            <div class="teaser-exercise"><div class="teaser-ex-name">Plank Hold</div><div class="teaser-ex-detail">3 sets &times; 45s hold</div></div>
+          </div>
+          <div class="teaser-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <p>Unlock your full 7-day plan</p>
+            <a class="btn btn-accent" href="/onboarding/">Get started free &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section cta-section">
+      <div class="cta-box anim-on-scroll">
+        <h2>Ready to transform your fitness?</h2>
+        <p>Join thousands of athletes who trust FitFlow to build their perfect plan. Start in 60 seconds — no credit card required.</p>
+        <a class="btn btn-accent btn-lg" href="/onboarding/">Get your free plan &rarr;</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 FitFlow. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="/pricing">Pricing</a>
+      <a href="/auth/login">Log in</a>
+      <a href="/onboarding/">Get started</a>
+      <a href="/app/">Dashboard</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/js/public.js"></script>
+  <script>
+    // Scroll-triggered animations
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('anim-visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.15 });
+      document.querySelectorAll('.anim-on-scroll').forEach(el => obs.observe(el));
+    }
+  </script>
+</body>
+</html>

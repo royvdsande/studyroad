@@ -1,0 +1,30 @@
+{
+  "headers": [
+    {
+      "source": "/(.*)\\.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+      ]
+    },
+    {
+      "source": "/favicon\\.png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=2592000, immutable" }
+      ]
+    }
+  ],
+  "rewrites": [
+    { "source": "/onboarding", "destination": "/onboarding/index.html" },
+    { "source": "/pricing", "destination": "/pricing.html" },
+    { "source": "/auth/login", "destination": "/auth/login.html" },
+    { "source": "/auth/signup", "destination": "/auth/signup.html" },
+    { "source": "/app", "destination": "/app/index.html" },
+    { "source": "/app/:path*", "destination": "/app/index.html" }
+  ]
+}
