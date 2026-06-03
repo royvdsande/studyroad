@@ -85,7 +85,7 @@ export default async function handler(req, res) {
       await customerRef.set({ stripeCustomerId, email }, { merge: true });
     }
 
-    const origin = req.headers.origin || "https://fitflow.app";
+    const origin = req.headers.origin || "https://studyroad.app";
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       customer: stripeCustomerId || undefined,

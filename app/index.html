@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FitFlow | Home</title>
+  <title>StudyRoad | Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -22,7 +22,7 @@
   <div class="sidebar-overlay" id="overlay-dash"></div>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar-dash">
-      <div class="sidebar-header"><div class="sidebar-workspace"><div class="workspace-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" fill="white"/></svg></div><span class="sidebar-workspace-name">FitFlow</span></div></div>
+      <div class="sidebar-header"><div class="sidebar-workspace"><div class="workspace-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4.5V9.5L7 13L1 9.5V4.5L7 1Z" fill="white"/></svg></div><span class="sidebar-workspace-name">StudyRoad</span></div></div>
       <div class="sidebar-section">
         <p class="sidebar-section-label">Application</p>
         <button class="sidebar-link button-reset" data-dashboard-view="overview" title="Home"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="sidebar-link-text">Home</span></button>
@@ -46,7 +46,7 @@
           </div>
           <div class="ctx-group"><div class="ctx-item danger" id="dashboard-signout"><span class="ctx-item-label"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Sign out</span></div></div>
         </div>
-        <div class="sidebar-user" id="dashboard-user-trigger"><div class="user-avatar skeleton" id="dashboard-user-avatar">R</div><div class="user-info"><div class="user-name skeleton" id="dashboard-user-name">FitFlow user</div><div class="user-email skeleton" id="dashboard-user-email">mail@example.com</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gray-400)"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></div>
+        <div class="sidebar-user" id="dashboard-user-trigger"><div class="user-avatar skeleton" id="dashboard-user-avatar">R</div><div class="user-info"><div class="user-name skeleton" id="dashboard-user-name">StudyRoad user</div><div class="user-email skeleton" id="dashboard-user-email">mail@example.com</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--gray-400)"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg></div>
       </div>
     </aside>
 
@@ -100,9 +100,9 @@
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:12px;flex-wrap:wrap">
             <div>
               <h2 class="dash-title" style="margin-bottom:4px">My Plan</h2>
-              <p style="font-size:14px;color:var(--gray-500)">Your AI-generated training and nutrition plan.</p>
+              <p style="font-size:14px;color:var(--gray-500)">Your AI-generated study roadmap.</p>
             </div>
-            <a class="btn btn-primary" href="/onboarding" id="plan-generate-btn" style="font-size:13px">Generate new plan</a>
+            <a class="btn btn-primary" href="/app/ai" id="plan-generate-btn" style="font-size:13px">Open AI chatbot</a>
           </div>
           <div id="plan-content">
             <div id="plan-loading" style="text-align:center;padding:48px 20px;color:var(--gray-400)">
@@ -228,8 +228,8 @@
                     <p style="font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px">€ 4,99 <span style="font-size:12px;font-weight:400;color:var(--gray-500)">/mo</span></p>
                     <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">Perfect to get started.</p>
                     <ul class="billing-features" style="margin-bottom:16px">
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 AI plan per month</li>
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>7-day training schedule</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 AI roadmap per month</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>7-day study roadmap</li>
                       <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Email support</li>
                     </ul>
                     <button class="btn btn-outline btn-full" data-plan-checkout="plus" id="billing-cta-plus">Upgrade</button>
@@ -240,21 +240,21 @@
                       <span style="background:var(--gray-100);color:var(--gray-600);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px">Most popular</span>
                     </div>
                     <p style="font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px">€ 9,00 <span style="font-size:12px;font-weight:400;color:var(--gray-500)">/mo</span></p>
-                    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">For serious athletes.</p>
+                    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">For serious learners.</p>
                     <ul class="billing-features" style="margin-bottom:16px">
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited AI plans</li>
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Weekly plan updates</li>
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Detailed macro tracking</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited AI roadmaps</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Weekly roadmap updates</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Advanced progress insights</li>
                     </ul>
                     <button class="btn btn-primary btn-full" data-plan-checkout="pro" id="billing-cta-pro">Upgrade</button>
                   </div>
                   <div class="billing-upgrade-card" id="billing-card-ultimate">
                     <p style="font-size:16px;font-weight:700;margin-bottom:4px">Elite</p>
                     <p style="font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px">€ 49,99 <span style="font-size:12px;font-weight:400;color:var(--gray-500)">/mo</span></p>
-                    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">The ultimate experience.</p>
+                    <p style="font-size:12px;color:var(--gray-500);margin-bottom:12px">The ultimate study planning experience.</p>
                     <ul class="billing-features" style="margin-bottom:16px">
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>AI coaching chat</li>
-                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom meal preferences</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>AI study chat</li>
+                      <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom subject priorities</li>
                       <li class="billing-feature"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated support</li>
                     </ul>
                     <button class="btn btn-outline btn-full" data-plan-checkout="ultimate" id="billing-cta-ultimate">Upgrade</button>
@@ -376,9 +376,9 @@
               <h2 class="chatbot-welcome-title">How can I help you today?</h2>
               <p class="chatbot-welcome-sub">Ask me anything and I'll do my best to help.</p>
               <div class="chatbot-suggestions">
-                <button class="chatbot-suggestion button-reset" data-prompt="What does my training plan look like?">What does my training plan look like?</button>
-                <button class="chatbot-suggestion button-reset" data-prompt="Give me tips for my next workout">Give me tips for my next workout</button>
-                <button class="chatbot-suggestion button-reset" data-prompt="What should I eat today?">What should I eat today?</button>
+                <button class="chatbot-suggestion button-reset" data-prompt="Help me build a study roadmap">Help me build a study roadmap</button>
+                <button class="chatbot-suggestion button-reset" data-prompt="Give me study tips for my next exam">Give me study tips for my next exam</button>
+                <button class="chatbot-suggestion button-reset" data-prompt="Help me prioritize my homework">Help me prioritize my homework</button>
               </div>
             </div>
 

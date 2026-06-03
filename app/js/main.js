@@ -28,22 +28,6 @@ async function initAuth() {
       renderRoute();
     }
 
-    // Transfer plan generated during anonymous onboarding to the new account
-    if (user && !user.isAnonymous) {
-      const pendingPlan = localStorage.getItem("ob_pending_plan");
-      if (pendingPlan) {
-        try {
-          const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js");
-          await setDoc(
-            doc(state.firestore, "users", user.uid),
-            { plan: JSON.parse(pendingPlan) },
-            { merge: true }
-          );
-          localStorage.removeItem("ob_pending_plan");
-        } catch {}
-      }
-    }
-
     const params = new URLSearchParams(window.location.search);
     if (params.get("checkout") === "success") {
       if (params.get("anonymous") === "true") {

@@ -15,7 +15,7 @@
   .teaser-wrap { max-width: 100%; }
   .cta-box { padding: 40px 20px; }
   .hero-floating { display: none; }
-  /* Onboarding */
+  /* Removed setup flow */
   .ob-cards { grid-template-columns: 1fr 1fr; }
   .ob-pills { flex-wrap: wrap; }
   .ob-form-grid { grid-template-columns: 1fr; }
