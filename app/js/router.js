@@ -66,7 +66,7 @@ export function preInitRoute() {
 
   const topbarLabel = document.getElementById("dashboard-topbar-label");
   if (topbarLabel) topbarLabel.textContent = label;
-  document.title = `StudyRoad | ${label}`;
+  document.title = `FitFlow | ${label}`;
 
   document.querySelectorAll("#sidebar-dash [data-dashboard-view]").forEach((btn) => {
     if (viewName === "settings" && btn.dataset.dashboardView === "settings") {

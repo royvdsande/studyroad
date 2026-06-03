@@ -70,7 +70,7 @@ export async function signUpWithEmailPassword(name, email, password, statusEl, b
     const currentUser = state.auth.currentUser;
     let user;
 
-    // If anonymous user exists (e.g. from checkout), link instead of create
+    // If anonymous user exists (e.g. from onboarding checkout), link instead of create
     if (currentUser && currentUser.isAnonymous) {
       const credential = EmailAuthProvider.credential(email, password);
       const result = await linkWithCredential(currentUser, credential);
@@ -171,7 +171,7 @@ export async function signInWithGoogle(statusEl, button) {
     const currentUser = state.auth.currentUser;
     let result;
 
-    // If anonymous user exists (e.g. from checkout), link instead of sign in
+    // If anonymous user exists (e.g. from onboarding checkout), link instead of sign in
     if (currentUser && currentUser.isAnonymous) {
       try {
         result = await linkWithPopup(currentUser, provider);

@@ -341,13 +341,13 @@ body { overflow: hidden; }
 .plan-stat { font-size: 13px; color: var(--gray-500); }
 .plan-stat strong { color: var(--accent, #10b981); }
 
-/* Study target overview grid */
+/* Macro overview grid */
 .plan-macro-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .plan-macro-item { text-align: center; padding: 16px 8px; border: 1.5px solid var(--gray-200); border-radius: var(--radius); position: relative; }
 .plan-macro-value { display: block; font-size: 24px; font-weight: 800; letter-spacing: -0.5px; }
 .plan-macro-label { display: block; font-size: 12px; color: var(--gray-400); margin-top: 2px; text-transform: uppercase; font-weight: 500; letter-spacing: 0.04em; }
 
-/* Locked focus items for free users */
+/* Locked macro items (protein & fat for free users) */
 .plan-macro-locked { position: relative; }
 .plan-macro-locked .plan-macro-blur { filter: blur(8px); user-select: none; }
 .plan-macro-lock-overlay {
@@ -376,7 +376,7 @@ body { overflow: hidden; }
   font-size: 13px; color: var(--accent-dark, #059669); line-height: 1.5;
 }
 
-/* Day block */
+/* Day block (shared by training & nutrition) */
 .plan-day-block { border-bottom: 1px solid var(--gray-100); }
 .plan-day-block:last-child { border-bottom: none; }
 .plan-day-blurred { filter: blur(6px); user-select: none; pointer-events: none; }
@@ -391,7 +391,7 @@ body { overflow: hidden; }
 
 .plan-day-desc { padding: 10px 16px 4px; font-size: 13px; color: var(--gray-500); line-height: 1.6; }
 
-/* Study tasks */
+/* Training exercises */
 .plan-day-exercises { padding: 6px 16px 10px; }
 .plan-ex-row { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--gray-50); }
 .plan-ex-row:last-child { border-bottom: none; }
@@ -402,7 +402,7 @@ body { overflow: hidden; }
 .plan-ex-note { display: block; font-size: 11px; color: var(--gray-400); font-style: italic; margin-top: 2px; }
 .plan-rest-msg { text-align: center; padding: 20px 0; font-size: 14px; color: var(--gray-400); font-style: italic; }
 
-/* Study day tags */
+/* Nutrition day macros */
 .plan-day-macros { display: flex; gap: 6px; flex-wrap: wrap; padding: 6px 16px 0; }
 .plan-dm-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; }
 .plan-dm-cal { background: #e0f2fe; color: #0369a1; }
@@ -411,7 +411,7 @@ body { overflow: hidden; }
 .plan-dm-fat { background: #fce7f3; color: #db2777; }
 .plan-dm-locked { background: var(--gray-100); color: var(--gray-400); cursor: default; }
 
-/* Study notes */
+/* Nutrition meals */
 .plan-day-meals { padding: 8px 16px 12px; }
 .plan-meal-item { padding: 5px 0; border-bottom: 1px solid var(--gray-50); }
 .plan-meal-item:last-child { border-bottom: none; }

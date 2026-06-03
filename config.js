@@ -1,13 +1,13 @@
-// StudyRoad App Configuration
+// FitFlow App Configuration
 // ========================
 
 const BINAS_CONFIG = {
   version: "Versie 2.0.0",
-  copyright: "2026 StudyRoad",
+  copyright: "2026 FitFlow",
   showCredit: false,
 
   // Firebase configuratie
-  authDomain: "account.studyroad.app",
+  authDomain: "account.binas.app",
 
   // Admin configuratie
   primaryAdmin: "mail@royvds.nl",
@@ -57,7 +57,7 @@ const BINAS_CONFIG = {
     {
       id: "plus",
       name: "Starter",
-      desc: "Perfect to get started with AI study planning.",
+      desc: "Perfect to get started with AI fitness.",
       monthlyPrice: "4,99",
       yearlyPrice: "3,99",
       yearlyTotal: "47,99",
@@ -65,16 +65,16 @@ const BINAS_CONFIG = {
       yearlyPriceId: "price_1TDMJ5LzjWXxGtsSYaGkzu7c",
       popular: false,
       features: [
-        "1 AI roadmap per month",
-        "7-day study roadmap",
-        "Basic revision guide",
+        "1 AI-generated plan per month",
+        "7-day training schedule",
+        "Basic nutrition guide",
         "Email support",
       ],
     },
     {
       id: "pro",
       name: "Pro",
-      desc: "For serious learners who want results.",
+      desc: "For serious athletes who want results.",
       monthlyPrice: "9,00",
       yearlyPrice: "7,20",
       yearlyTotal: "86,40",
@@ -82,16 +82,16 @@ const BINAS_CONFIG = {
       yearlyPriceId: "price_1TDMLbLzjWXxGtsS87kmPljA",
       popular: true,
       features: [
-        "Unlimited AI roadmaps",
-        "Weekly roadmap updates",
-        "Advanced progress insights",
+        "Unlimited AI plans",
+        "Weekly plan updates",
+        "Detailed macro tracking",
         "Priority support",
       ],
     },
     {
       id: "ultimate",
       name: "Elite",
-      desc: "The ultimate study planning experience.",
+      desc: "The ultimate fitness experience.",
       monthlyPrice: "49,99",
       yearlyPrice: "39,99",
       yearlyTotal: "479,88",
@@ -100,8 +100,8 @@ const BINAS_CONFIG = {
       popular: false,
       features: [
         "Everything in Pro",
-        "AI study chat",
-        "Custom subject priorities",
+        "AI coaching chat",
+        "Custom meal preferences",
         "Dedicated support",
       ],
     },
