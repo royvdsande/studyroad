@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>FitFlow – Build Your Plan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="stylesheet" href="/css/variables.css" />
+  <link rel="stylesheet" href="/css/components.css" />
+  <link rel="stylesheet" href="/onboarding/css/onboarding.css" />
+</head>
+<body>
+  <div class="ob" id="ob">
+    <!-- Progress bar -->
+    <div class="ob-progress-wrap">
+      <div class="ob-progress-bar" id="ob-progress"></div>
+    </div>
+
+    <!-- Floating background icons -->
+    <div class="ob-bg-icons" aria-hidden="true">
+      <svg class="ob-bg-icon ob-bg-icon--1" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gray-200)" stroke-width="1.5"><path d="M6.5 6.5h11M4 12h16M6.5 17.5h11"/><circle cx="4" cy="6.5" r="2"/><circle cx="20" cy="17.5" r="2"/></svg>
+      <svg class="ob-bg-icon ob-bg-icon--2" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gray-200)" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <svg class="ob-bg-icon ob-bg-icon--3" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gray-200)" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      <svg class="ob-bg-icon ob-bg-icon--4" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gray-200)" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    </div>
+
+    <!-- ==================== STEP 0: Coach Intro ==================== -->
+    <div class="ob-step active" id="ob-step-0">
+      <div class="ob-step-inner ob-center">
+        <div class="ob-coach-avatar">
+          <div class="ob-coach-ring"></div>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div class="ob-chat-wrap">
+          <div class="ob-chat-bubble" id="ob-intro-bubble">
+            <span class="ob-typing" id="ob-intro-text"></span>
+            <span class="ob-cursor">|</span>
+          </div>
+        </div>
+        <button class="ob-cta-btn hidden" id="ob-start-btn">
+          Let's go
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <div class="ob-social-proof hidden" id="ob-social-proof">
+          <div class="ob-proof-avatars">
+            <span class="ob-proof-av" style="background:#10b981">R</span>
+            <span class="ob-proof-av" style="background:#8b5cf6">M</span>
+            <span class="ob-proof-av" style="background:#f97316">K</span>
+            <span class="ob-proof-av" style="background:#3b82f6">J</span>
+          </div>
+          <span class="ob-proof-text"><strong id="ob-proof-count">12,847</strong> plans generated</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== STEP 1: Goal Selection ==================== -->
+    <div class="ob-step" id="ob-step-1">
+      <div class="ob-step-inner">
+        <div class="ob-coach-mini">
+          <div class="ob-coach-mini-av">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-goal-coach">What's your fitness goal?</div>
+        </div>
+
+        <div class="ob-goal-carousel" id="ob-goals">
+          <div class="ob-goal-track" id="ob-goal-track">
+            <!-- Lose Weight -->
+            <button class="ob-goal-card" data-value="lose-weight">
+              <div class="ob-goal-visual">
+                <svg class="ob-goal-svg" viewBox="0 0 120 120" fill="none">
+                  <circle cx="60" cy="30" r="12" stroke="var(--accent)" stroke-width="2.5"/>
+                  <path d="M60 42 L60 75" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M60 75 L45 105" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M60 75 L75 105" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M40 58 L60 52 L80 58" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                  <!-- flame -->
+                  <path class="ob-flame" d="M90 25 Q95 15 92 8 Q100 15 98 25 Q96 30 90 25Z" fill="#f97316" opacity="0.7"/>
+                  <path class="ob-flame ob-flame--2" d="M85 30 Q88 22 86 17 Q92 22 91 30 Q89 34 85 30Z" fill="#fb923c" opacity="0.5"/>
+                </svg>
+              </div>
+              <span class="ob-goal-title">Lose Weight</span>
+              <span class="ob-goal-desc">Burn fat and get lean</span>
+              <div class="ob-select-ring"></div>
+            </button>
+
+            <!-- Build Muscle -->
+            <button class="ob-goal-card" data-value="build-muscle">
+              <div class="ob-goal-visual">
+                <svg class="ob-goal-svg" viewBox="0 0 120 120" fill="none">
+                  <circle cx="60" cy="28" r="12" stroke="var(--accent)" stroke-width="2.5"/>
+                  <path d="M60 40 L60 72" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M60 72 L46 105" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M60 72 L74 105" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+                  <!-- arms with dumbbells -->
+                  <path d="M35 52 L60 48 L85 52" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" fill="none"/>
+                  <rect x="24" y="48" width="12" height="6" rx="2" stroke="var(--accent)" stroke-width="2" class="ob-dumbbell"/>
+                  <rect x="84" y="48" width="12" height="6" rx="2" stroke="var(--accent)" stroke-width="2" class="ob-dumbbell"/>
+                </svg>
+              </div>
+              <span class="ob-goal-title">Build Muscle</span>
+              <span class="ob-goal-desc">Gain strength and size</span>
+              <div class="ob-select-ring"></div>
+            </button>
+
+            <!-- Get Fitter -->
+            <button class="ob-goal-card" data-value="get-fitter">
+              <div class="ob-goal-visual">
+                <svg class="ob-goal-svg" viewBox="0 0 120 120" fill="none">
+                  <!-- heartbeat line -->
+                  <path class="ob-heartbeat" d="M10 65 L30 65 L40 45 L50 85 L60 35 L70 75 L80 55 L90 65 L110 65" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                  <!-- heart -->
+                  <path d="M60 45 Q60 30 48 30 Q36 30 36 45 Q36 60 60 78 Q84 60 84 45 Q84 30 72 30 Q60 30 60 45Z" fill="none" stroke="var(--accent)" stroke-width="2" opacity="0.3"/>
+                </svg>
+              </div>
+              <span class="ob-goal-title">Get Fitter</span>
+              <span class="ob-goal-desc">Improve overall health</span>
+              <div class="ob-select-ring"></div>
+            </button>
+
+            <!-- Boost Endurance -->
+            <button class="ob-goal-card" data-value="boost-endurance">
+              <div class="ob-goal-visual">
+                <svg class="ob-goal-svg" viewBox="0 0 120 120" fill="none">
+                  <!-- runner -->
+                  <circle cx="65" cy="25" r="10" stroke="var(--accent)" stroke-width="2.5"/>
+                  <path d="M58 35 L52 62" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M52 62 L38 90" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M52 62 L68 88" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M58 42 L42 55" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <path d="M58 42 L78 48" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+                  <!-- speed lines -->
+                  <line class="ob-speed" x1="85" y1="40" x2="100" y2="40" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+                  <line class="ob-speed ob-speed--2" x1="88" y1="50" x2="105" y2="50" stroke="var(--accent)" stroke-width="1.5" opacity="0.3"/>
+                  <line class="ob-speed ob-speed--3" x1="82" y1="60" x2="98" y2="60" stroke="var(--accent)" stroke-width="1.5" opacity="0.2"/>
+                </svg>
+              </div>
+              <span class="ob-goal-title">Boost Endurance</span>
+              <span class="ob-goal-desc">Last longer, go further</span>
+              <div class="ob-select-ring"></div>
+            </button>
+          </div>
+          <!-- Dot indicators (mobile) -->
+          <div class="ob-dots" id="ob-goal-dots">
+            <span class="ob-dot active"></span>
+            <span class="ob-dot"></span>
+            <span class="ob-dot"></span>
+            <span class="ob-dot"></span>
+          </div>
+        </div>
+
+        <!-- Coach response after selection -->
+        <div class="ob-coach-response hidden" id="ob-goal-response">
+          <div class="ob-coach-mini-av">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-goal-reply"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== STEP 2: Activity Level ==================== -->
+    <div class="ob-step" id="ob-step-2">
+      <div class="ob-step-inner">
+        <div class="ob-coach-mini">
+          <div class="ob-coach-mini-av">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm">How active are you right now?</div>
+        </div>
+
+        <div class="ob-activity-wrap" id="ob-activity">
+          <!-- Activity figure display -->
+          <div class="ob-activity-figure" id="ob-activity-figure">
+            <!-- Sitting figure (default) -->
+            <svg id="ob-figure-svg" class="ob-figure-svg" viewBox="0 0 100 140" fill="none">
+              <!-- Will be swapped by JS -->
+              <circle cx="50" cy="22" r="14" stroke="var(--accent)" stroke-width="2.5"/>
+              <path d="M50 36 L50 75" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M50 75 L35 110" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M50 75 L65 110" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M30 55 L50 50 L70 55" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <div class="ob-activity-label" id="ob-activity-label">Select your level</div>
+          </div>
+
+          <!-- Slider track -->
+          <div class="ob-slider-track">
+            <div class="ob-slider-fill" id="ob-slider-fill"></div>
+            <button class="ob-slider-stop" data-value="sedentary" data-index="0">
+              <span class="ob-slider-dot"></span>
+              <span class="ob-slider-text">Sedentary</span>
+            </button>
+            <button class="ob-slider-stop" data-value="lightly-active" data-index="1">
+              <span class="ob-slider-dot"></span>
+              <span class="ob-slider-text">Light</span>
+            </button>
+            <button class="ob-slider-stop" data-value="moderately-active" data-index="2">
+              <span class="ob-slider-dot"></span>
+              <span class="ob-slider-text">Moderate</span>
+            </button>
+            <button class="ob-slider-stop" data-value="very-active" data-index="3">
+              <span class="ob-slider-dot"></span>
+              <span class="ob-slider-text">Active</span>
+            </button>
+            <button class="ob-slider-stop" data-value="athlete" data-index="4">
+              <span class="ob-slider-dot"></span>
+              <span class="ob-slider-text">Athlete</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Coach response -->
+        <div class="ob-coach-response hidden" id="ob-activity-response">
+          <div class="ob-coach-mini-av">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-activity-reply"></div>
+        </div>
+
+        <button class="ob-back-link" id="ob-back-2">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== STEP 3: Personal Stats ==================== -->
+    <div class="ob-step" id="ob-step-3">
+      <div class="ob-step-inner">
+        <div class="ob-coach-mini">
+          <div class="ob-coach-mini-av">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-stats-coach">Let me get to know you a bit...</div>
+        </div>
+
+        <!-- Sub-step dots -->
+        <div class="ob-mini-dots" id="ob-stats-dots">
+          <span class="ob-mini-dot active"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+          <span class="ob-mini-dot"></span>
+        </div>
+
+        <!-- Stats sub-steps container -->
+        <div class="ob-stats-container" id="ob-stats-container">
+
+          <!-- Sub-step: Gender -->
+          <div class="ob-sub-step active" id="ob-sub-gender">
+            <p class="ob-sub-label">What's your gender?</p>
+            <div class="ob-gender-cards" id="ob-gender">
+              <button class="ob-gender-card" data-value="male">
+                <svg viewBox="0 0 60 100" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="30" cy="18" r="10"/>
+                  <path d="M30 28 L30 65" stroke-linecap="round"/>
+                  <path d="M30 65 L18 92" stroke-linecap="round"/>
+                  <path d="M30 65 L42 92" stroke-linecap="round"/>
+                  <path d="M14 45 L30 40 L46 45" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>Male</span>
+              </button>
+              <button class="ob-gender-card" data-value="female">
+                <svg viewBox="0 0 60 100" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="30" cy="18" r="10"/>
+                  <path d="M30 28 L30 55" stroke-linecap="round"/>
+                  <path d="M22 55 L30 28 L38 55Z" fill="var(--accent-50)" stroke="var(--accent)"/>
+                  <path d="M22 55 L16 92" stroke-linecap="round"/>
+                  <path d="M38 55 L44 92" stroke-linecap="round"/>
+                  <path d="M16 42 L30 38 L44 42" stroke-linecap="round" fill="none"/>
+                </svg>
+                <span>Female</span>
+              </button>
+              <button class="ob-gender-card" data-value="other">
+                <svg viewBox="0 0 60 100" fill="none" stroke="var(--accent)" stroke-width="2">
+                  <circle cx="30" cy="18" r="10"/>
+                  <path d="M30 28 L30 62" stroke-linecap="round"/>
+                  <path d="M30 62 L20 92" stroke-linecap="round"/>
+                  <path d="M30 62 L40 92" stroke-linecap="round"/>
+                  <path d="M18 48 L30 44 L42 48" stroke-linecap="round" fill="none"/>
+                  <circle cx="30" cy="62" r="3" fill="var(--accent)" opacity="0.3"/>
+                </svg>
+                <span>Other</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-step: Age -->
+          <div class="ob-sub-step" id="ob-sub-age">
+            <p class="ob-sub-label">How old are you?</p>
+            <div class="ob-num-input-wrap">
+              <div class="ob-num-display">
+                <input type="number" id="ob-age" class="ob-num-value" min="14" max="99" placeholder="25" inputmode="numeric" />
+                <span class="ob-num-unit">years</span>
+              </div>
+            </div>
+            <button class="ob-next-sub-btn" id="ob-age-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Weight -->
+          <div class="ob-sub-step" id="ob-sub-weight">
+            <p class="ob-sub-label">What's your weight?</p>
+            <div class="ob-num-input-wrap">
+              <div class="ob-num-display">
+                <input type="number" id="ob-weight" class="ob-num-value" min="30" max="300" placeholder="75" inputmode="numeric" />
+                <span class="ob-num-unit">kg</span>
+              </div>
+            </div>
+            <button class="ob-next-sub-btn" id="ob-weight-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Height -->
+          <div class="ob-sub-step" id="ob-sub-height">
+            <p class="ob-sub-label">How tall are you?</p>
+            <div class="ob-num-input-wrap">
+              <div class="ob-num-display">
+                <input type="number" id="ob-height" class="ob-num-value" min="120" max="250" placeholder="178" inputmode="numeric" />
+                <span class="ob-num-unit">cm</span>
+              </div>
+            </div>
+            <button class="ob-next-sub-btn" id="ob-height-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Workout Preferences -->
+          <div class="ob-sub-step" id="ob-sub-workout-prefs">
+            <p class="ob-sub-label">How do you want to work out?</p>
+            <div class="ob-field-group">
+              <label class="ob-field-label">How many days per week?</label>
+              <div class="ob-chip-row" id="ob-freq-chips">
+                <button class="ob-chip" data-value="2">2</button>
+                <button class="ob-chip" data-value="3">3</button>
+                <button class="ob-chip" data-value="4">4</button>
+                <button class="ob-chip" data-value="5">5</button>
+                <button class="ob-chip" data-value="6">6</button>
+              </div>
+            </div>
+            <div class="ob-field-group">
+              <label class="ob-field-label">Preferred time of day</label>
+              <div class="ob-chip-row" id="ob-time-chips">
+                <button class="ob-chip" data-value="morning">Morning</button>
+                <button class="ob-chip" data-value="afternoon">Afternoon</button>
+                <button class="ob-chip" data-value="evening">Evening</button>
+                <button class="ob-chip" data-value="no-preference">No preference</button>
+              </div>
+            </div>
+            <div class="ob-field-group">
+              <label class="ob-field-label">Session duration</label>
+              <div class="ob-chip-row" id="ob-duration-chips">
+                <button class="ob-chip" data-value="30">30 min</button>
+                <button class="ob-chip" data-value="45">45 min</button>
+                <button class="ob-chip" data-value="60">60 min</button>
+                <button class="ob-chip" data-value="90">90 min</button>
+              </div>
+            </div>
+            <button class="ob-next-sub-btn" id="ob-workout-prefs-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Workout Split -->
+          <div class="ob-sub-step" id="ob-sub-workout-split">
+            <p class="ob-sub-label">Pick a training split</p>
+            <p class="ob-sub-hint">We'll tailor the program to your preference.</p>
+            <div class="ob-split-cards" id="ob-split-cards">
+              <button class="ob-split-card" data-value="push-pull-legs">
+                <span class="ob-split-icon">🏋️</span>
+                <span class="ob-split-name">Push / Pull / Legs</span>
+                <span class="ob-split-desc">Classic 3-way split, great for hypertrophy</span>
+              </button>
+              <button class="ob-split-card" data-value="arnold-split">
+                <span class="ob-split-icon">💪</span>
+                <span class="ob-split-name">Arnold Split</span>
+                <span class="ob-split-desc">Chest+back, shoulders+arms, legs — high volume</span>
+              </button>
+              <button class="ob-split-card" data-value="upper-lower">
+                <span class="ob-split-icon">⚡</span>
+                <span class="ob-split-name">Upper / Lower</span>
+                <span class="ob-split-desc">Simple 2-way split, good for 4 days/week</span>
+              </button>
+              <button class="ob-split-card" data-value="full-body">
+                <span class="ob-split-icon">🔥</span>
+                <span class="ob-split-name">Full Body</span>
+                <span class="ob-split-desc">Train everything each session, ideal for 2–3 days</span>
+              </button>
+              <button class="ob-split-card" data-value="bro-split">
+                <span class="ob-split-icon">🎯</span>
+                <span class="ob-split-name">Bro Split</span>
+                <span class="ob-split-desc">One muscle group per day, 5–6 days/week</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-step: Skip Legs -->
+          <div class="ob-sub-step" id="ob-sub-skip-legs">
+            <p class="ob-sub-label">Do you want to skip dedicated leg training?</p>
+            <p class="ob-sub-hint">For example, if you already play soccer, run, or cycle regularly.</p>
+            <div class="ob-yesno-cards" id="ob-skip-legs">
+              <button class="ob-yesno-card" data-value="yes">
+                <span class="ob-yesno-icon">⚽</span>
+                <span class="ob-yesno-label">Yes, skip legs</span>
+                <span class="ob-yesno-desc">I get enough leg work from other sports</span>
+              </button>
+              <button class="ob-yesno-card" data-value="no">
+                <span class="ob-yesno-icon">🦵</span>
+                <span class="ob-yesno-label">No, include legs</span>
+                <span class="ob-yesno-desc">I want a complete leg workout</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sub-step: Dietary Preferences -->
+          <div class="ob-sub-step" id="ob-sub-diet-prefs">
+            <p class="ob-sub-label">Any dietary preferences?</p>
+            <div class="ob-chip-row ob-chip-wrap" id="ob-diet-chips">
+              <button class="ob-chip" data-value="no-preference">No preference</button>
+              <button class="ob-chip" data-value="vegetarian">Vegetarian</button>
+              <button class="ob-chip" data-value="vegan">Vegan</button>
+              <button class="ob-chip" data-value="pescatarian">Pescatarian</button>
+              <button class="ob-chip" data-value="keto">Keto</button>
+              <button class="ob-chip" data-value="halal">Halal</button>
+              <button class="ob-chip" data-value="gluten-free">Gluten-free</button>
+              <button class="ob-chip" data-value="lactose-free">Lactose-free</button>
+            </div>
+            <button class="ob-next-sub-btn" id="ob-diet-prefs-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Current Diet (open text) -->
+          <div class="ob-sub-step" id="ob-sub-current-diet">
+            <p class="ob-sub-label">What does an average day of eating look like for you?</p>
+            <p class="ob-sub-hint">Tell me roughly what you eat — I'll try to improve it without completely changing your routine.</p>
+            <textarea id="ob-current-diet" class="ob-notes-input" rows="4" placeholder="E.g. breakfast: oatmeal with banana, lunch: chicken wrap, dinner: pasta with veggies, snacks: protein bar..."></textarea>
+            <button class="ob-next-sub-btn" id="ob-current-diet-next">
+              Continue
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Sub-step: Extra Info (open text) -->
+          <div class="ob-sub-step" id="ob-sub-extra-info">
+            <p class="ob-sub-label">Anything else I should know?</p>
+            <p class="ob-sub-hint">Other sports you do, injuries, allergies, or any extra context that helps me build the perfect plan.</p>
+            <textarea id="ob-extra-info" class="ob-notes-input" rows="3" placeholder="Optional — e.g. I play soccer twice a week, I have a shoulder injury, I only have dumbbells at home..."></textarea>
+            <button class="ob-cta-btn" id="ob-generate">
+              Generate my plan
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Coach responses for sub-steps -->
+        <div class="ob-coach-response hidden" id="ob-stats-response">
+          <div class="ob-coach-mini-av">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-stats-reply"></div>
+        </div>
+
+        <button class="ob-back-link" id="ob-back-3">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== STEP 4: Loading / Plan Generation ==================== -->
+    <div class="ob-step" id="ob-step-4">
+      <div class="ob-step-inner ob-center">
+        <!-- Progress ring -->
+        <div class="ob-gen-ring-wrap">
+          <svg class="ob-gen-ring" viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="54" stroke="var(--gray-100)" stroke-width="5" fill="none"/>
+            <circle id="ob-ring-progress" cx="60" cy="60" r="54" stroke="var(--accent)" stroke-width="5" fill="none"
+              stroke-linecap="round" stroke-dasharray="339.29" stroke-dashoffset="339.29"
+              transform="rotate(-90 60 60)"/>
+          </svg>
+          <div class="ob-gen-pct" id="ob-gen-pct">0%</div>
+        </div>
+
+        <!-- Coach messages during generation -->
+        <div class="ob-gen-messages" id="ob-gen-messages">
+          <div class="ob-chat-bubble ob-chat-sm ob-gen-msg active" id="ob-gen-msg-1">Analyzing your profile...</div>
+        </div>
+
+        <!-- Live stats ticker -->
+        <div class="ob-gen-stats" id="ob-gen-stats">
+          <div class="ob-gen-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            <span>Calories: <strong id="ob-gen-cal">—</strong></span>
+          </div>
+          <div class="ob-gen-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+            <span>Exercises: <strong id="ob-gen-ex">—</strong></span>
+          </div>
+          <div class="ob-gen-stat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/></svg>
+            <span>Meals: <strong id="ob-gen-meals">—</strong></span>
+          </div>
+        </div>
+
+        <!-- Loading steps with checkmarks -->
+        <div class="ob-gen-steps" id="ob-gen-steps">
+          <div class="ob-gen-step" id="ob-gstep-1">
+            <div class="ob-check-circle">
+              <svg class="ob-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span>Calculating calorie targets</span>
+          </div>
+          <div class="ob-gen-step" id="ob-gstep-2">
+            <div class="ob-check-circle">
+              <svg class="ob-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span>Building training schedule</span>
+          </div>
+          <div class="ob-gen-step" id="ob-gstep-3">
+            <div class="ob-check-circle">
+              <svg class="ob-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span>Designing nutrition plan</span>
+          </div>
+          <div class="ob-gen-step" id="ob-gstep-4">
+            <div class="ob-check-circle">
+              <svg class="ob-checkmark" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <span>Adding personal tips</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== STEP 5: Results ==================== -->
+    <div class="ob-step" id="ob-step-5">
+      <div class="ob-step-inner ob-results">
+
+        <!-- Sparkle/confetti layer -->
+        <div class="ob-sparkles" id="ob-sparkles" aria-hidden="true"></div>
+
+        <!-- Coach header -->
+        <div class="ob-coach-mini ob-result-coach">
+          <div class="ob-coach-mini-av">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <div class="ob-chat-bubble ob-chat-sm" id="ob-result-coach-msg">Your plan is ready! Here's a preview.</div>
+        </div>
+
+        <!-- Animated stats -->
+        <div class="ob-result-stats" id="ob-result-stats">
+          <div class="ob-r-stat">
+            <div class="ob-r-stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+            </div>
+            <span class="ob-r-stat-val" id="ob-r-calories">0</span>
+            <span class="ob-r-stat-label">Daily kcal</span>
+          </div>
+          <div class="ob-r-stat">
+            <div class="ob-r-stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple-500)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            </div>
+            <span class="ob-r-stat-val" id="ob-r-days">0</span>
+            <span class="ob-r-stat-label">Days</span>
+          </div>
+          <div class="ob-r-stat">
+            <div class="ob-r-stat-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--orange-500)" stroke-width="2"><path d="M6.5 6.5h11M4 12h16M6.5 17.5h11"/><circle cx="4" cy="6.5" r="2"/><circle cx="20" cy="17.5" r="2"/></svg>
+            </div>
+            <span class="ob-r-stat-val" id="ob-r-exercises">0</span>
+            <span class="ob-r-stat-label">Exercises</span>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <p class="ob-summary" id="ob-summary"></p>
+
+        <!-- Personal Note (based on user's extra info) -->
+        <div class="ob-personal-note hidden" id="ob-personal-note">
+          <div class="ob-pn-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Personalized for you</span>
+          </div>
+          <p class="ob-pn-text" id="ob-pn-text"></p>
+          <div class="ob-pn-blur" id="ob-pn-blur">
+            <p class="ob-pn-locked" id="ob-pn-locked"></p>
+          </div>
+        </div>
+
+        <!-- Tips -->
+        <div class="ob-tips-wrap" id="ob-tips"></div>
+
+        <!-- Training Plan -->
+        <div class="ob-plan-section">
+          <h2 class="ob-plan-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M6.5 6.5h11M4 12h16M6.5 17.5h11"/><circle cx="4" cy="6.5" r="2"/><circle cx="20" cy="17.5" r="2"/></svg>
+            Training Plan
+          </h2>
+          <div class="ob-week-scroll" id="ob-training-plan"></div>
+        </div>
+
+        <!-- Nutrition Plan -->
+        <div class="ob-plan-section">
+          <h2 class="ob-plan-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--orange-500)" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            Nutrition Plan
+          </h2>
+          <div class="ob-week-scroll" id="ob-nutrition-plan"></div>
+        </div>
+
+        <!-- Paywall -->
+        <div class="ob-paywall" id="ob-paywall">
+          <div class="ob-paywall-card">
+            <div class="ob-pw-badge">14-DAY FREE TRIAL</div>
+            <h3 class="ob-pw-title">Unlock your full 7-day plan</h3>
+            <p class="ob-pw-desc">Get complete access to all training schedules, detailed meal plans, and weekly updates.</p>
+
+            <div class="ob-pw-features">
+              <div class="ob-pw-feat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Full 7-day training plan</span>
+              </div>
+              <div class="ob-pw-feat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Complete nutrition guide</span>
+              </div>
+              <div class="ob-pw-feat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Weekly plan updates</span>
+              </div>
+              <div class="ob-pw-feat">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+                <span>Cancel anytime</span>
+              </div>
+            </div>
+
+            <button class="ob-pw-btn" id="ob-unlock-btn">
+              <span>Unlock full plan</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <div class="ob-shimmer"></div>
+            </button>
+
+            <div class="ob-pw-trust">
+              <span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Secure payment
+              </span>
+              <span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                No commitment
+              </span>
+            </div>
+
+            <a href="/app/" class="ob-pw-skip">Continue with preview &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/onboarding/js/onboarding.js"></script>
+</body>
+</html>

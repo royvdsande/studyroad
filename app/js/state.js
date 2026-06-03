@@ -25,7 +25,7 @@ export const BINAS_CONFIG = _config;
 export const plusLocalKey = "binas:plus-local-status";
 export const storedEmailKey = "binas:premium-email";
 
-const firebaseAuthDomain = BINAS_CONFIG?.authDomain || "account.studyroad.app";
+const firebaseAuthDomain = BINAS_CONFIG?.authDomain || "account.binas.app";
 const firebaseConfig = {
   apiKey: "AIzaSyBgXo3zllXtFJZDn4elpY8DemEQG_ltMk0",
   authDomain: firebaseAuthDomain,

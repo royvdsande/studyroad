@@ -69,8 +69,8 @@ module.exports = async (req, res) => {
 
   const model = ALLOWED_MODELS.includes(requestedModel) ? requestedModel : 'gpt-4o-mini';
 
-  // Fetch user's StudyRoad context from Firestore
-  let studyContext = 'No saved study roadmap available yet.';
+  // Fetch user's fitness plan from Firestore
+  let fitnessContext = 'No fitness plan available yet.';
   if (admin.apps.length && uid) {
     try {
       const db = admin.firestore();
@@ -80,45 +80,65 @@ module.exports = async (req, res) => {
         const plan = data?.plan;
         const profile = data?.planProfile;
 
-        if (plan) {
-          const studyDays = plan.study || plan.schedule || plan.roadmap || [];
-          const scheduleSummary = Array.isArray(studyDays)
-            ? studyDays.map(d => `  - ${d.day}: ${d.label || d.description || 'Study block'}`).join('\n')
+        if (plan && profile) {
+          const goal = profile.goal || 'general fitness';
+          const activityLevel = profile.activityLevel || 'moderately-active';
+          const dailyCalories = plan.dailyCalories || profile.targetCalories || 'unknown';
+          const macros = plan.dailyMacros || {};
+          const protein = macros.protein || profile.proteinTarget || 'unknown';
+          const carbs = macros.carbs || profile.carbTarget || 'unknown';
+          const fat = macros.fat || profile.fatTarget || 'unknown';
+          const workoutSplit = profile.workoutSplit || 'balanced';
+          const workoutFrequency = profile.workoutFrequency || 4;
+          const dietaryPreference = profile.dietaryPreference || 'no preference';
+
+          const trainingSummary = Array.isArray(plan.training)
+            ? plan.training.map(d => `  - ${d.day}: ${d.label}`).join('\n')
             : 'Not available';
+
           const tips = Array.isArray(plan.tips) ? plan.tips.join(', ') : '';
 
-          studyContext = `
-USER STUDY PROFILE:
-- Subject: ${profile?.subject || 'not specified'}
-- Goal: ${profile?.goal || 'study smarter'}
-- Deadline: ${profile?.examDate || profile?.deadline || 'not specified'}
-- Available time: ${profile?.studyHours || 'not specified'} hours/week
+          fitnessContext = `
+USER FITNESS PROFILE:
+- Goal: ${goal}
+- Activity level: ${activityLevel}
+- Workout frequency: ${workoutFrequency} days/week
+- Workout split: ${workoutSplit}
+- Dietary preference: ${dietaryPreference}
 
-STUDY ROADMAP:
-${scheduleSummary}
+DAILY NUTRITION TARGETS:
+- Calories: ${dailyCalories} kcal
+- Protein: ${protein}g
+- Carbohydrates: ${carbs}g
+- Fat: ${fat}g
 
-ROADMAP SUMMARY:
+WEEKLY TRAINING SCHEDULE:
+${trainingSummary}
+
+PLAN SUMMARY:
 ${plan.summary || 'No summary available.'}
 
 ${plan.personalNote ? `PERSONAL NOTE:\n${plan.personalNote}` : ''}
 
 ${tips ? `KEY TIPS:\n${tips}` : ''}`.trim();
+        } else if (plan) {
+          fitnessContext = 'User has a fitness plan but no profile details available.';
         }
       }
     } catch {
-      // Non-fatal — proceed without saved study context
+      // Non-fatal — proceed without fitness context
     }
   }
 
   const greeting = userEmail ? `The user's email is ${userEmail}.` : '';
 
-  const systemPrompt = `You are a personal AI study coach for StudyRoad. You help users plan study sessions, understand difficult topics, prepare for exams, and stay focused. You may have access to the user's saved study roadmap and profile.
+  const systemPrompt = `You are a personal AI fitness coach for FitFlow. You help users with their training, nutrition, and general fitness questions. You have access to the user's personalized fitness plan and profile.
 
 ${greeting}
 
-${studyContext}
+${fitnessContext}
 
-Be concise, motivating, and practical. When answering questions about the user's plan, refer to the specific details above. If the user asks about a specific study day, topic, deadline, or task, give detailed guidance based on their roadmap. If they ask something outside your knowledge, say so honestly. Always keep your tone supportive, clear, and motivating.`;
+Be concise, motivating, and practical. When answering questions about the user's plan, refer to the specific details above. If the user asks about a specific day's workout or meal, give detailed guidance based on their plan. If they ask something outside your knowledge, say so honestly. Always keep your tone supportive and energetic.`;
 
   // SSE streaming response
   res.statusCode = 200;

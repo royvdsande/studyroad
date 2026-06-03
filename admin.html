@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - StudyRoad</title>
+  <title>Admin - Binas</title>
   <style>
     :root {
       --bg: #f8fafc;
@@ -435,7 +435,7 @@
         <div class="form-group">
             <div class="checkbox-group">
               <input type="checkbox" id="global-enable-plus">
-              <label for="global-enable-plus" style="font-weight: 600;">StudyRoad Premium inschakelen</label>
+              <label for="global-enable-plus" style="font-weight: 600;">Binas Plus Systeem Inschakelen</label>
             </div>
             <p class="form-hint" style="margin-left: 26px;">
                <strong>AAN (aangevinkt):</strong> Normaal gedrag. Gebruikers moeten betalen voor Plus functies.<br>
@@ -471,13 +471,13 @@
 
           <div class="form-group">
             <label class="form-label">Copyright</label>
-            <input type="text" id="config-copyright" placeholder="© 2025 StudyRoad">
+            <input type="text" id="config-copyright" placeholder="© 2025 Binas.app">
           </div>
 
           <div class="form-group">
             <label class="form-label">Prijs Display</label>
             <input type="text" id="config-price" placeholder="1,49">
-            <p class="form-hint">De prijs die wordt getoond voor StudyRoad Premium (zonder €)</p>
+            <p class="form-hint">De prijs die wordt getoond voor Binas Plus (zonder €)</p>
           </div>
 
           <div class="form-group">
@@ -500,7 +500,7 @@
 
           <div class="form-group">
             <label class="form-label">Firebase Auth Domein</label>
-            <input type="text" id="config-auth-domain" placeholder="account.studyroad.app">
+            <input type="text" id="config-auth-domain" placeholder="account.binas.app">
             <p class="form-hint">Het custom domein dat Firebase Auth gebruikt</p>
           </div>
 
@@ -528,7 +528,7 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <h3 class="card-title">Mijn StudyRoad Premium-status</h3>
+            <h3 class="card-title">Mijn Binas Plus Status</h3>
             <p class="card-subtitle">Beheer je eigen Plus abonnement</p>
           </div>
           <span id="plus-status-badge" class="status-badge">Laden...</span>
@@ -665,13 +665,13 @@
     }
 
     const runtimeConfig = getMergedConfig();
-    const firebaseAuthDomain = runtimeConfig.authDomain || 'account.studyroad.app';
+    const firebaseAuthDomain = runtimeConfig.authDomain || 'account.binas.app';
 
     const firebaseConfig = {
       apiKey: "AIzaSyBgXo3zllXtFJZDn4elpY8DemEQG_ltMk0",
       authDomain: firebaseAuthDomain,
-      projectId: "studyroad-91a32",
-      storageBucket: "studyroad-91a32.firebasestorage.app",
+      projectId: "binas-91a32",
+      storageBucket: "binas-91a32.firebasestorage.app",
       messagingSenderId: "971498903694",
       appId: "1:971498903694:web:5ab8b630b183f5204ed1df",
       measurementId: "G-1LLBGZNRNC",

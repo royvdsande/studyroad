@@ -38,7 +38,7 @@ function bindPasswordToggles() {
   });
 }
 
-// Detect post-checkout flow
+// Detect post-checkout flow from onboarding
 const urlParams = new URLSearchParams(window.location.search);
 const isPostCheckout = urlParams.get("link_anonymous") === "true" && urlParams.get("checkout") === "success";
 
@@ -48,7 +48,7 @@ function showPostCheckoutBanner() {
   banner.className = "auth-checkout-banner";
   banner.innerHTML = `
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-    <span>Your subscription is ready! Create an account to save your StudyRoad workspace.</span>
+    <span>Your plan and subscription are ready! Create an account to save everything.</span>
   `;
   banner.style.cssText = "display:flex;align-items:center;gap:10px;padding:14px 18px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;margin-bottom:20px;font-size:14px;color:#065f46;line-height:1.4;";
 
@@ -66,7 +66,7 @@ function bindAuthEvents() {
     }
     // For login with existing account after checkout, store anonymous UID for data migration
     if (isPostCheckout && state.auth.currentUser?.isAnonymous) {
-      localStorage.setItem("studyroad_anonymous_uid", state.auth.currentUser.uid);
+      localStorage.setItem("ob_anonymous_uid", state.auth.currentUser.uid);
     }
     await signInWithEmailPassword(
       els.signinEmail.value.trim(),
@@ -129,7 +129,8 @@ async function init() {
       window.location.replace("/app/");
       return;
     }
-    // For non-logged-in checkout state, update state in the background so the auth page UI works properly.
+    // For non-logged-in state (anonymous user from onboarding checkout),
+    // update state in the background so the auth page UI works properly.
     refreshAccountState(user, {});
   });
 }
