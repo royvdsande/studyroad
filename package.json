@@ -1,7 +1,7 @@
 {
-  "name": "binas",
+  "name": "studyroad",
   "version": "1.0.0",
-  "description": "Een statische pagina met een Mozilla PDF.js-viewer voor de Binas-tabellen, gecombineerd met een snelle inhoudsopgave aan de linkerzijde.",
+  "description": "StudyRoad is an AI-powered study planning app for roadmaps, progress, and chat-based learning support.",
   "main": "script.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
