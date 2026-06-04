@@ -3,8 +3,10 @@ import {
   signInWithEmailLink,
   sendSignInLinkToEmail,
   GoogleAuthProvider,
-  signInWithPopup,
-  linkWithPopup,
+  signInWithRedirect,
+  linkWithRedirect,
+  getRedirectResult,
+  signInWithCredential,
   updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -146,62 +148,63 @@ export async function signInWithEmailPassword(email, password, statusEl, button)
 
 export async function signInWithGoogle(statusEl, button) {
   initFirebase();
-
-  // Token identifies this specific invocation so a stale finally/timer from a
-  // previous cancelled attempt doesn't reset a newly started loading state.
-  const token = ((button._signInToken | 0) + 1) & 0xffff;
-  button._signInToken = token;
-
   setLoadingState(button, true);
   setStatus(statusEl, "", "info");
-
-  // Fallback: if Firebase's popup-closed detection stalls (known browser issue),
-  // reset loading state when the main window regains focus after the popup closes.
-  let focusTimer = null;
-  const onWindowFocus = () => {
-    focusTimer = setTimeout(() => {
-      if (button._signInToken === token) setLoadingState(button, false);
-    }, 500);
-  };
-  window.addEventListener("focus", onWindowFocus, { once: true });
-
-  let loginSucceeded = false;
   try {
     const provider = new GoogleAuthProvider();
     const currentUser = state.auth.currentUser;
-    let result;
-
-    // If anonymous user exists (e.g. from checkout), link instead of sign in
     if (currentUser && currentUser.isAnonymous) {
-      try {
-        result = await linkWithPopup(currentUser, provider);
-      } catch (linkError) {
-        // If linking fails (e.g. Google account already exists), fall back to regular sign in
-        if (linkError.code === "auth/credential-already-in-use" || linkError.code === "auth/email-already-in-use") {
-          const anonUid = currentUser.uid;
-          localStorage.setItem("ob_anonymous_uid", anonUid);
-          result = await signInWithPopup(state.auth, provider);
-        } else {
-          throw linkError;
+      sessionStorage.setItem("google-redirect-intent", "link");
+      sessionStorage.setItem("google-anon-uid", currentUser.uid);
+      await linkWithRedirect(currentUser, provider);
+    } else {
+      sessionStorage.setItem("google-redirect-intent", "signin");
+      await signInWithRedirect(state.auth, provider);
+    }
+    // Page will navigate away; loading state stays until redirect
+  } catch (error) {
+    sessionStorage.removeItem("google-redirect-intent");
+    sessionStorage.removeItem("google-anon-uid");
+    const msg = getFirebaseErrorMessage(error.code);
+    if (msg) setStatus(statusEl, msg, "error");
+    setLoadingState(button, false);
+  }
+}
+
+export async function handleGoogleRedirectResult() {
+  initFirebase();
+  const intent = sessionStorage.getItem("google-redirect-intent");
+  try {
+    const result = await getRedirectResult(state.auth);
+    if (!result) {
+      if (intent) sessionStorage.removeItem("google-redirect-intent");
+      return;
+    }
+    sessionStorage.removeItem("google-redirect-intent");
+    if (intent === "link") {
+      const anonUid = sessionStorage.getItem("google-anon-uid");
+      sessionStorage.removeItem("google-anon-uid");
+      if (anonUid) localStorage.setItem("ob_anonymous_uid", anonUid);
+    }
+    // onAuthStateChanged handles navigation after redirect
+  } catch (error) {
+    const anonUid = sessionStorage.getItem("google-anon-uid");
+    sessionStorage.removeItem("google-redirect-intent");
+    sessionStorage.removeItem("google-anon-uid");
+    if (
+      (error.code === "auth/credential-already-in-use" || error.code === "auth/email-already-in-use") &&
+      intent === "link"
+    ) {
+      if (anonUid) localStorage.setItem("ob_anonymous_uid", anonUid);
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      if (credential) {
+        try {
+          await signInWithCredential(state.auth, credential);
+          // onAuthStateChanged handles navigation after sign-in
+        } catch {
+          // Silent — onAuthStateChanged will see null user and redirect to login
         }
       }
-    } else {
-      result = await signInWithPopup(state.auth, provider);
-    }
-
-    state.currentUser = result.user;
-    loginSucceeded = true;
-    navigate("/app/");
-  } catch (error) {
-    const msg = getFirebaseErrorMessage(error.code);
-    if (msg) {
-      setStatus(statusEl, msg, "error");
-    }
-  } finally {
-    window.removeEventListener("focus", onWindowFocus);
-    clearTimeout(focusTimer);
-    if (!loginSucceeded && button._signInToken === token) {
-      setLoadingState(button, false);
     }
   }
 }

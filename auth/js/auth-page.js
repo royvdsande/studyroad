@@ -2,6 +2,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.6.0/fi
 import { initFirebase, state } from "/app/js/state.js";
 import {
   completeMagicLinkSignIn,
+  handleGoogleRedirectResult,
   signInWithEmailPassword,
   signInWithGoogle,
   signUpWithEmailPassword,
@@ -117,6 +118,7 @@ async function init() {
   bindAuthEvents();
   showPostCheckoutBanner();
   preserveCheckoutParams();
+  await handleGoogleRedirectResult();
   await completeMagicLinkSignIn();
   onAuthStateChanged(state.auth, (user) => {
     if (user && !user.isAnonymous) {

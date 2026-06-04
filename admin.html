@@ -500,7 +500,7 @@
 
           <div class="form-group">
             <label class="form-label">Firebase Auth Domein</label>
-            <input type="text" id="config-auth-domain" placeholder="account.studyroad.app">
+            <input type="text" id="config-auth-domain" placeholder="account.binas.app">
             <p class="form-hint">Het custom domein dat Firebase Auth gebruikt</p>
           </div>
 
@@ -632,7 +632,8 @@
       signOut, 
       isSignInWithEmailLink,
       GoogleAuthProvider,
-      signInWithPopup,
+      signInWithRedirect,
+      getRedirectResult,
       signInWithEmailAndPassword
     } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
     import { 
@@ -665,7 +666,7 @@
     }
 
     const runtimeConfig = getMergedConfig();
-    const firebaseAuthDomain = runtimeConfig.authDomain || 'account.studyroad.app';
+    const firebaseAuthDomain = runtimeConfig.authDomain || 'account.binas.app';
 
     const firebaseConfig = {
       apiKey: "AIzaSyBgXo3zllXtFJZDn4elpY8DemEQG_ltMk0",
@@ -817,10 +818,12 @@
       }
     });
 
+    getRedirectResult(auth).catch((e) => showMessage(msg, e.message, true));
+
     btnLoginGoogle.addEventListener('click', async () => {
       const provider = new GoogleAuthProvider();
       try {
-        await signInWithPopup(auth, provider);
+        await signInWithRedirect(auth, provider);
       } catch (e) {
         showMessage(msg, e.message, true);
       }
