@@ -1,0 +1,51 @@
+/* ============================================================
+   StudyRoad — Pricing
+   ============================================================ */
+.pricing-hero { padding: 72px 0 8px; text-align: center; }
+.pricing-hero .eyebrow { justify-content: center; margin-bottom: 14px; }
+.pricing-hero h1 { font-size: clamp(36px, 5vw, 52px); letter-spacing: -.03em; margin-bottom: 16px; }
+.pricing-hero p { font-size: 18px; color: var(--gray-600); max-width: 520px; margin: 0 auto; line-height: 1.55; }
+
+.bill-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 4px; background: var(--gray-100); border-radius: var(--r-full); margin-top: 28px; }
+.bill-toggle button { height: 36px; padding: 0 18px; border-radius: var(--r-full); border: none; background: none; font-family: inherit; font-size: 14px; font-weight: 600; color: var(--gray-500); cursor: pointer; transition: .15s; }
+.bill-toggle button.active { background: var(--white); color: var(--ink); box-shadow: var(--sh-sm); }
+.bill-save { font-size: 12px; font-weight: 700; color: var(--green-700); background: var(--green-50); padding: 2px 8px; border-radius: var(--r-full); margin-left: 4px; }
+
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 48px 0 0; align-items: stretch; }
+.plan {
+  display: flex; flex-direction: column; background: var(--white);
+  border: 1px solid var(--gray-150); border-radius: var(--r-lg); padding: 30px 26px;
+  box-shadow: var(--sh-xs); transition: box-shadow .2s, transform .2s;
+}
+.plan:hover { box-shadow: var(--sh-md); transform: translateY(-3px); }
+.plan--featured { border: 1.5px solid var(--ink); box-shadow: var(--sh-lg); position: relative; }
+.plan--featured:hover { transform: translateY(-5px); }
+.plan-tag { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 13px; border-radius: var(--r-full); box-shadow: var(--sh-blue); }
+.plan-name { font-family: var(--font-display); font-size: 19px; font-weight: 700; margin-bottom: 6px; }
+.plan-desc { font-size: 13.5px; color: var(--gray-500); margin-bottom: 18px; min-height: 38px; }
+.plan-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 4px; }
+.plan-price .amt { font-family: var(--font-display); font-size: 42px; font-weight: 800; letter-spacing: -.03em; }
+.plan-price .per { font-size: 14px; color: var(--gray-500); font-weight: 500; }
+.plan-price-note { font-size: 12.5px; color: var(--gray-400); margin-bottom: 22px; }
+.plan .btn { margin-bottom: 22px; }
+.plan-features { display: flex; flex-direction: column; gap: 12px; }
+.plan-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--gray-700); line-height: 1.4; }
+.plan-feature svg { flex-shrink: 0; margin-top: 2px; color: var(--accent); }
+.plan-feature.muted { color: var(--gray-400); }
+.plan-feature.muted svg { color: var(--gray-300); }
+.plan-divider { height: 1px; background: var(--gray-100); margin: 20px 0; }
+.plan-features-label { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--gray-400); margin-bottom: 14px; }
+
+/* FAQ */
+.faq { max-width: 720px; margin: 0 auto; }
+.faq-item { border-bottom: 1px solid var(--gray-150); }
+.faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 4px; background: none; border: none; font-family: inherit; font-size: 16.5px; font-weight: 600; color: var(--ink); cursor: pointer; text-align: left; }
+.faq-q svg { flex-shrink: 0; color: var(--gray-400); transition: transform .22s; }
+.faq-item.open .faq-q svg { transform: rotate(45deg); color: var(--accent); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height .26s ease; }
+.faq-a-inner { padding: 0 4px 22px; font-size: 15px; color: var(--gray-600); line-height: 1.6; }
+
+@media (max-width: 860px) {
+  .plans { grid-template-columns: 1fr; }
+  .plan--featured { order: -1; }
+}

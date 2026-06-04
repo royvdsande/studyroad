@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — StudyRoad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/core.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="css/pricing.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230c0e14'/%3E%3Cpath d='M7 17C12 17 12 7 17 7' stroke='white' stroke-width='2' stroke-linecap='round' stroke-dasharray='0.2 4'/%3E%3Ccircle cx='7' cy='17' r='2.2' fill='white'/%3E%3Ccircle cx='17' cy='7' r='2.4' fill='%232b5ce6'/%3E%3C/svg%3E" />
+  <style> .mark-dest { fill: var(--accent); } </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M7 17C12 17 12 7 17 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.2 4"/><circle cx="7" cy="17" r="2.2" fill="white"/><circle cx="17" cy="7" r="2.4" class="mark-dest"/></svg></span>
+        <span class="brand-name">StudyRoad</span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="index.html#how">How it works</a>
+        <a class="nav-link" href="index.html#features">Features</a>
+        <a class="nav-link nav-link-active" href="pricing.html">Pricing</a>
+      </div>
+      <div class="nav-actions">
+        <a class="nav-link nav-desktop-only" href="login.html">Sign in</a>
+        <a class="btn btn-accent btn-sm" href="login.html?mode=signup">Start free</a>
+      </div>
+      <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="index.html#how">How it works</a>
+    <a href="index.html#features">Features</a>
+    <a href="pricing.html">Pricing</a>
+    <div class="mobile-menu-actions">
+      <a class="btn btn-outline btn-full" href="login.html">Sign in</a>
+      <a class="btn btn-accent btn-full" href="login.html?mode=signup">Start free</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="pricing-hero">
+      <div class="wrap">
+        <span class="eyebrow">Pricing</span>
+        <h1>Plans that grow with your study load</h1>
+        <p>Start free, upgrade when exam season hits. Cancel anytime — no strings attached.</p>
+        <div class="bill-toggle" id="billToggle">
+          <button class="active" data-cycle="monthly">Monthly</button>
+          <button data-cycle="yearly">Yearly <span class="bill-save">−20%</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-bottom:40px">
+      <div class="wrap">
+        <div class="plans">
+          <!-- Starter -->
+          <div class="plan reveal">
+            <div class="plan-name">Starter</div>
+            <p class="plan-desc">Perfect to get started and try your first roadmap.</p>
+            <div class="plan-price"><span class="amt" data-m="€4,99" data-y="€3,99">€4,99</span><span class="per">/mo</span></div>
+            <p class="plan-price-note" data-m="Billed monthly" data-y="Billed yearly">Billed monthly</p>
+            <a class="btn btn-outline btn-full" href="login.html?mode=signup">Start free</a>
+            <p class="plan-features-label">Includes</p>
+            <div class="plan-features">
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>1 AI roadmap per month</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>7-day study roadmap</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Progress tracking</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Email support</div>
+            </div>
+          </div>
+
+          <!-- Pro (featured) -->
+          <div class="plan plan--featured reveal" style="transition-delay:.06s">
+            <span class="plan-tag">Most popular</span>
+            <div class="plan-name">Pro</div>
+            <p class="plan-desc">For serious learners juggling multiple exams.</p>
+            <div class="plan-price"><span class="amt" data-m="€9,00" data-y="€7,20">€9,00</span><span class="per">/mo</span></div>
+            <p class="plan-price-note" data-m="Billed monthly" data-y="Billed yearly · save €21,60">Billed monthly</p>
+            <a class="btn btn-accent btn-full" href="login.html?mode=signup">Choose Pro</a>
+            <p class="plan-features-label">Everything in Starter, plus</p>
+            <div class="plan-features">
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited AI roadmaps</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Weekly roadmap updates</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Advanced progress insights</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Priority support</div>
+            </div>
+          </div>
+
+          <!-- Elite -->
+          <div class="plan reveal" style="transition-delay:.12s">
+            <div class="plan-name">Elite</div>
+            <p class="plan-desc">The ultimate study-planning experience.</p>
+            <div class="plan-price"><span class="amt" data-m="€49,99" data-y="€39,99">€49,99</span><span class="per">/mo</span></div>
+            <p class="plan-price-note" data-m="Billed monthly" data-y="Billed yearly">Billed monthly</p>
+            <a class="btn btn-outline btn-full" href="login.html?mode=signup">Choose Elite</a>
+            <p class="plan-features-label">Everything in Pro, plus</p>
+            <div class="plan-features">
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited AI study chat</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Custom subject priorities</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Document &amp; note analysis</div>
+              <div class="plan-feature"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Dedicated support</div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;font-size:13.5px;color:var(--gray-400);margin-top:24px">All plans include a free trial. Prices in EUR, VAT included.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head center reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="section-title">Questions, answered</h2>
+        </div>
+        <div class="faq" id="faq">
+          <div class="faq-item">
+            <button class="faq-q">Can I switch plans whenever I want?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq-a"><div class="faq-a-inner">Yes. Upgrade, downgrade or cancel anytime from Settings → Billing. Changes take effect at the start of your next cycle and unused time is prorated.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Is there a free version?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq-a"><div class="faq-a-inner">Every plan starts with a free trial, no credit card needed. You can build your first roadmap and explore the AI chat before deciding.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How do I cancel or delete my account?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq-a"><div class="faq-a-inner">Cancel your subscription from Settings → Billing in one click. To permanently delete your account and data, head to Settings → Profile → Danger Zone.</div></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Which payment methods do you accept?<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+            <div class="faq-a"><div class="faq-a-inner">All payments are securely handled by Stripe — credit/debit cards, iDEAL, and more. We never store your card details.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div class="cta-box reveal">
+          <h2>Ready when you are</h2>
+          <p>Build your first roadmap free and see how much calmer studying can feel.</p>
+          <a class="btn btn-accent btn-lg" href="login.html?mode=signup">Start free &rarr;</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M7 17C12 17 12 7 17 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-dasharray="0.2 4"/><circle cx="7" cy="17" r="2.2" fill="white"/><circle cx="17" cy="7" r="2.4" class="mark-dest"/></svg></span>
+          <span class="brand-name">StudyRoad</span>
+        </a>
+        <p>The calm, AI-powered way to plan your studying and walk into every exam prepared.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col"><h5>Product</h5><a href="index.html#features">Features</a><a href="index.html#how">How it works</a><a href="pricing.html">Pricing</a><a href="app.html">Dashboard</a></div>
+        <div class="footer-col"><h5>Account</h5><a href="login.html">Sign in</a><a href="login.html?mode=signup">Create account</a><a href="app.html#billing">Billing</a></div>
+        <div class="footer-col"><h5>Company</h5><a href="#">About</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+      </div>
+    </div>
+    <div class="footer-base"><div class="footer-base-inner"><p>© 2026 StudyRoad. All rights reserved.</p><p>Made for students who'd rather plan than panic.</p></div></div>
+  </footer>
+
+  <script>
+    var burger = document.getElementById('burger'), menu = document.getElementById('mobileMenu');
+    burger.addEventListener('click', function () { var o = !menu.classList.contains('open'); menu.classList.toggle('open', o); burger.classList.toggle('open', o); });
+    // Billing toggle
+    document.querySelectorAll('#billToggle button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('#billToggle button').forEach(function (x) { x.classList.remove('active'); });
+        b.classList.add('active');
+        var y = b.dataset.cycle === 'yearly';
+        document.querySelectorAll('[data-m]').forEach(function (el) { el.textContent = y ? el.dataset.y : el.dataset.m; });
+      });
+    });
+    // FAQ accordion
+    document.querySelectorAll('#faq .faq-q').forEach(function (q) {
+      q.addEventListener('click', function () {
+        var item = q.parentElement, a = item.querySelector('.faq-a');
+        var open = item.classList.toggle('open');
+        a.style.maxHeight = open ? a.scrollHeight + 'px' : '0';
+      });
+    });
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  </script>
+  <script src="js/brand.js"></script>
+  <script src="js/tweaks.js"></script>
+</body>
+</html>
