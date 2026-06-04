@@ -219,6 +219,45 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 700; letter-spac
 .input-eye { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; display: grid; place-items: center; border-radius: var(--r-xs); color: var(--gray-400); background: none; border: none; cursor: pointer; }
 .input-eye:hover { background: var(--gray-100); color: var(--gray-600); }
 
+/* ============================================================
+   Toast notifications (used by utils.js showToast)
+   ============================================================ */
+.toast-container {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; display: flex; flex-direction: column-reverse; gap: 8px;
+  align-items: center; pointer-events: none;
+}
+.toast {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 16px 12px 18px;
+  background: var(--ink); color: #fff;
+  border-radius: var(--r-full); font-size: 14px; font-weight: 500;
+  box-shadow: var(--sh-lg); pointer-events: auto;
+  max-width: 480px; white-space: nowrap;
+  animation: toastIn .25s cubic-bezier(.22,1,.36,1) forwards;
+}
+.toast.removing { animation: toastOut .2s ease forwards; }
+.toast[data-variant="error"]   { background: var(--red-600); }
+.toast[data-variant="success"] { background: var(--green-600); }
+.toast[data-variant="info"]    { background: var(--ink); }
+.toast-message { flex: 1; line-height: 1.4; white-space: normal; }
+.toast-close {
+  width: 22px; height: 22px; flex-shrink: 0;
+  display: grid; place-items: center; border-radius: 50%;
+  background: rgba(255,255,255,.15); border: none; color: inherit;
+  cursor: pointer; padding: 0;
+}
+.toast-close:hover { background: rgba(255,255,255,.25); }
+@keyframes toastIn  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes toastOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(10px); } }
+
+/* ---- Button loading dots (setLoadingState in utils.js) ---- */
+.btn-dots { display: inline-flex; align-items: center; gap: 4px; }
+.btn-dots span { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: btnDot .8s ease-in-out infinite; }
+.btn-dots span:nth-child(2) { animation-delay: .15s; }
+.btn-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes btnDot { 0%,60%,100% { transform: none; opacity: .5; } 30% { transform: translateY(-3px); opacity: 1; } }
+
 /* ---- Skeleton loading ---- */
 @keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
 .skeleton {
