@@ -7,7 +7,7 @@ const BINAS_CONFIG = {
   showCredit: false,
 
   // Firebase configuratie
-  authDomain: "account.studyroad.app",
+  authDomain: "account.binas.app",
 
   // Admin configuratie
   primaryAdmin: "mail@royvds.nl",
