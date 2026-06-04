@@ -3,7 +3,7 @@ import { state, plusLocalKey, initFirebase } from "./state.js";
 import { els } from "./elements.js";
 import { setStatus } from "./utils.js";
 import { navigate, renderRoute, preInitRoute } from "./router.js";
-import { refreshAccountState, completeMagicLinkSignIn } from "./auth.js";
+import { refreshAccountState, completeMagicLinkSignIn, handleGoogleRedirectResult } from "./auth.js";
 import { updatePricingCopy, updateAccountSurfaces } from "./dashboard.js";
 import { bindEvents } from "./events.js";
 import { initSidebarState } from "./ui.js";
@@ -16,12 +16,22 @@ let _routeInitialized = false;
 
 async function initAuth() {
   initFirebase();
+  await handleGoogleRedirectResult();
   await completeMagicLinkSignIn();
 
   window.addEventListener("popstate", () => renderRoute());
 
   onAuthStateChanged(state.auth, async (user) => {
     await refreshAccountState(user, {});
+
+    const pendingAction = sessionStorage.getItem("google-reauth-action");
+    if (pendingAction && user && !user.isAnonymous) {
+      sessionStorage.removeItem("google-reauth-action");
+      if (pendingAction === "delete-account") {
+        const { performDeleteAccount } = await import("./settings.js");
+        await performDeleteAccount();
+      }
+    }
 
     if (!_routeInitialized) {
       _routeInitialized = true;

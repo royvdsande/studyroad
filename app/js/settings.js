@@ -3,11 +3,11 @@ import {
   sendPasswordResetEmail,
   deleteUser,
   GoogleAuthProvider,
-  linkWithPopup,
+  linkWithRedirect,
   unlink,
   updatePassword,
   reauthenticateWithCredential,
-  reauthenticateWithPopup,
+  reauthenticateWithRedirect,
   EmailAuthProvider,
 } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 import { state } from "./state.js";
@@ -17,9 +17,11 @@ import { navigate } from "./router.js";
 import { updateAccountSurfaces } from "./dashboard.js";
 
 let _reauthCallback = null;
+let _pendingReauthAction = null;
 
-export function openReauthModal(callback) {
+export function openReauthModal(callback, actionType = null) {
   _reauthCallback = callback;
+  _pendingReauthAction = actionType;
   document.getElementById("reauth-modal")?.classList.remove("hidden");
 }
 
@@ -32,18 +34,21 @@ export function closeReauthModal() {
 
 export async function performReauthWithGoogle(statusEl, button) {
   if (!state.currentUser) return;
-  const cb = _reauthCallback;
   setLoadingState(button, true);
   setStatus(statusEl, "", "info");
   try {
     const provider = new GoogleAuthProvider();
-    await reauthenticateWithPopup(state.currentUser, provider);
-    closeReauthModal();
-    if (cb) await cb();
+    if (_pendingReauthAction) {
+      sessionStorage.setItem("google-reauth-action", _pendingReauthAction);
+    }
+    sessionStorage.setItem("google-redirect-intent", "reauth");
+    await reauthenticateWithRedirect(state.currentUser, provider);
+    // Page navigates away; loading state stays until redirect
   } catch (error) {
+    sessionStorage.removeItem("google-redirect-intent");
+    sessionStorage.removeItem("google-reauth-action");
     const msg = getFirebaseErrorMessage(error.code);
     if (msg) setStatus(statusEl, msg, "error");
-  } finally {
     setLoadingState(button, false);
   }
 }
@@ -94,7 +99,7 @@ export async function setInitialPassword(password, statusEl, button) {
     import("./dashboard.js").then(({ updateSecurityTab }) => updateSecurityTab());
   } catch (error) {
     if (error.code === "auth/requires-recent-login") {
-      openReauthModal(() => setInitialPassword(password, statusEl, button));
+      openReauthModal(() => setInitialPassword(password, statusEl, button), "set-password");
     } else {
       setStatus(statusEl, getFirebaseErrorMessage(error.code), "error");
     }
@@ -134,7 +139,7 @@ export async function performDeleteAccount() {
   } catch (error) {
     closeDeleteConfirmModal();
     if (error.code === "auth/requires-recent-login") {
-      openReauthModal(() => performDeleteAccount());
+      openReauthModal(() => performDeleteAccount(), "delete-account");
     } else {
       const msg = getFirebaseErrorMessage(error.code);
       if (_deleteStatusEl) setStatus(_deleteStatusEl, msg, "error");
@@ -189,8 +194,9 @@ export async function toggleGoogleLink(statusEl, button) {
       setStatus(statusEl, "Google account unlinked.", "success");
     } else {
       const provider = new GoogleAuthProvider();
-      await linkWithPopup(state.currentUser, provider);
-      setStatus(statusEl, "Google account linked.", "success");
+      sessionStorage.setItem("google-redirect-intent", "settings-link");
+      await linkWithRedirect(state.currentUser, provider);
+      // Page navigates away; loading state stays until redirect
     }
   } catch (error) {
     const msg = getFirebaseErrorMessage(error.code);

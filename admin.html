@@ -632,7 +632,8 @@
       signOut, 
       isSignInWithEmailLink,
       GoogleAuthProvider,
-      signInWithPopup,
+      signInWithRedirect,
+      getRedirectResult,
       signInWithEmailAndPassword
     } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
     import { 
@@ -817,10 +818,12 @@
       }
     });
 
+    getRedirectResult(auth).catch((e) => showMessage(msg, e.message, true));
+
     btnLoginGoogle.addEventListener('click', async () => {
       const provider = new GoogleAuthProvider();
       try {
-        await signInWithPopup(auth, provider);
+        await signInWithRedirect(auth, provider);
       } catch (e) {
         showMessage(msg, e.message, true);
       }
