@@ -1,5 +1,5 @@
 /* global React, ReactDOM, SUBJECTS, PROGNOSE, fmtDatum, dagenTot, sortKey,
-   Ic, effStatus, StatusBadge, SubjectCard, CijfersView, V6View */
+   Ic, effStatus, StatusBadge, SubjectCard, CijfersView, V6View, AnimatedNumber, Confetti */
 const { useState, useEffect, useRef, useMemo } = React;
 
 const LS = { done: "pwwk.done.v2", notes: "pwwk.notes.v2", besluit: "pwwk.besluit.v2", view: "pwwk.view.v2" };
@@ -34,14 +34,14 @@ function Agenda({ subjects, done, besluiten, onOpen }) {
               {iso === TODAY && <span className="today">vandaag</span>}
             </div>
             <div className="agenda-items">
-              {items.map((s) => {
+              {items.map((s, ai) => {
                 const eff = effStatus(s, besluiten[s.id]);
                 const total = s.onderwerpen.length;
                 const ch = s.onderwerpen.filter((_, i) => done[`${s.id}::${i}`]).length;
                 const pct = total ? (ch / total) * 100 : 0;
                 const tijd = s.tijd && /^\d/.test(s.tijd) ? s.tijd : (s.tijd || "tijd volgt");
                 return (
-                  <button className="agenda-row" key={s.id} style={{ "--c": s.kleur }} onClick={() => onOpen(s.id)}>
+                  <button className="agenda-row" key={s.id} style={{ "--c": s.kleur, animationDelay: (ai * 0.05) + "s" }} onClick={() => onOpen(s.id)}>
                     <span className="ab">{s.code}</span>
                     <span>
                       <span className="an">{s.naam}</span>
@@ -92,7 +92,7 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
       <div className="kpis">
         <div className="kpi dark">
           <div className="k">Studievoortgang</div>
-          <div className="v">{pct}<small>%</small></div>
+          <div className="v"><AnimatedNumber value={pct} /><small>%</small></div>
           <div className="sub">{doneN} van {total} onderwerpen geleerd</div>
         </div>
         <div className={"kpi" + (teBeslissen.length ? " alert" : "")}>
@@ -154,8 +154,8 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
         <span className="count">{SUBJECTS.length} vakken</span>
       </div>
       <div className="grid">
-        {SUBJECTS.map((s) => (
-          <div key={s.id} ref={(el) => (cardRefs.current[s.id] = el)}>
+        {SUBJECTS.map((s, ci) => (
+          <div key={s.id} ref={(el) => (cardRefs.current[s.id] = el)} style={{ animationDelay: (ci * 0.05) + "s" }}>
             <SubjectCard
               subj={s} done={done} notes={notes} besluit={besluiten[s.id]}
               onToggle={onToggle} onNote={onNote} onDecide={onDecide}
@@ -212,11 +212,29 @@ const VIEW_META = {
 };
 
 // ---------- App ----------
+function CelebrationToast({ onClose }) {
+  useEffect(() => {
+    const t = setTimeout(onClose, 7000);
+    return () => clearTimeout(t);
+  }, []);
+  return (
+    <div className="fx-toast" role="status">
+      <span className="emoji">🎉</span>
+      <div>
+        <div className="ft-title">Alles afgevinkt — topper!</div>
+        <div className="ft-sub">Je hebt alle onderwerpen van álle vakken geleerd. Succes met de toetsen!</div>
+      </div>
+      <button className="ft-close" aria-label="Sluiten" onClick={onClose}>{Ic.cross({ width: 15, height: 15 })}</button>
+    </div>
+  );
+}
+
 function App() {
   const [done, setDone] = useState(() => load(LS.done, {}));
   const [notes, setNotes] = useState(() => load(LS.notes, {}));
   const [besluiten, setBesluiten] = useState(() => ({ ...DEFAULT_BESLUIT, ...load(LS.besluit, {}) }));
   const [view, setView] = useState(() => load(LS.view, "pwwk3"));
+  const [party, setParty] = useState(false);
   const cardRefs = useRef({});
 
   useEffect(() => localStorage.setItem(LS.done, JSON.stringify(done)), [done]);
@@ -224,6 +242,18 @@ function App() {
   useEffect(() => localStorage.setItem(LS.besluit, JSON.stringify(besluiten)), [besluiten]);
   useEffect(() => localStorage.setItem(LS.view, JSON.stringify(view)), [view]);
   useEffect(() => { window.scrollTo({ top: 0 }); }, [view]);
+
+  const totalTopics = useMemo(() => SUBJECTS.reduce((n, s) => n + s.onderwerpen.length, 0), []);
+  const doneTopics = SUBJECTS.reduce((n, s) => n + s.onderwerpen.filter((_, i) => done[`${s.id}::${i}`]).length, 0);
+  const allDone = totalTopics > 0 && doneTopics === totalTopics;
+  const wasAllDone = useRef(allDone);
+  useEffect(() => {
+    if (allDone && !wasAllDone.current) {
+      if (window.Confetti) { Confetti.cannons(); Confetti.rain(1600); }
+      setParty(true);
+    }
+    wasAllDone.current = allDone;
+  }, [allDone]);
 
   const toggle = (id, i) => setDone((p) => ({ ...p, [`${id}::${i}`]: !p[`${id}::${i}`] }));
   const setNote = (id, v) => setNotes((p) => ({ ...p, [id]: v }));
@@ -235,7 +265,7 @@ function App() {
   return (
     <div className="shell">
       <Rail view={view} setView={setView} teBeslissen={teBeslissen}
-        onReset={() => { if (confirm("Vinkjes, notities en keuzes wissen?")) { setDone({}); setNotes({}); setBesluiten({ ...DEFAULT_BESLUIT }); } }} />
+        onReset={() => { if (confirm("Vinkjes, notities en keuzes wissen?")) { setDone({}); setNotes({}); setBesluiten({ ...DEFAULT_BESLUIT }); setParty(false); } }} />
       <main className="main">
         <div className="viewbar">
           <div className="viewbar-in">
@@ -249,6 +279,7 @@ function App() {
         {view === "v6" && <V6View besluiten={besluiten} />}
         {view === "cijfers" && <CijfersView />}
       </main>
+      {party && <CelebrationToast onClose={() => setParty(false)} />}
     </div>
   );
 }
