@@ -1,10 +1,10 @@
 /* global React, V6, SUBJECTS, MOMENT_META, Ic, effStatus, EINDEXAMENS, CE_VENSTER */
 
-function V6Card({ vak }) {
+function V6Card({ vak, index = 0 }) {
   const sorted = [...vak.toetsen].sort((a, b) => MOMENT_META[a.moment].order - MOMENT_META[b.moment].order);
   const totaal = vak.toetsen.reduce((n, t) => n + (t.wf || 0), 0);
   return (
-    <div className="v6-card" style={{ "--c": vak.kleur }}>
+    <div className="v6-card" style={{ "--c": vak.kleur, animationDelay: (index * 0.04) + "s" }}>
       <div className="v6-card-top">
         <div className="vb">{vak.code}</div>
         <div className="vn">{vak.naam}</div>
@@ -83,7 +83,7 @@ function V6View({ besluiten }) {
         <span className="count">{V6.length} vakken</span>
       </div>
       <div className="v6-grid">
-        {vakken.map((v) => <V6Card key={v.id} vak={v} />)}
+        {vakken.map((v, i) => <V6Card key={v.id} vak={v} index={i} />)}
       </div>
 
       <div className="sec-head">
@@ -103,8 +103,8 @@ function V6View({ besluiten }) {
         </div>
       </div>
       <div className="ce-grid">
-        {EINDEXAMENS.map((e) => (
-          <div className="ce-card" key={e.id} style={{ "--c": e.kleur }}>
+        {EINDEXAMENS.map((e, i) => (
+          <div className="ce-card" key={e.id} style={{ "--c": e.kleur, animationDelay: (i * 0.03) + "s" }}>
             <div className="ce-badge">{e.code}</div>
             <div className="ce-body">
               <div className="ce-name">{e.naam}</div>

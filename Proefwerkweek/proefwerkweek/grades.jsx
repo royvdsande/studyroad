@@ -1,4 +1,4 @@
-/* global React, GRADES, GRADES_META, PROGNOSE, ProgMini, Ic */
+/* global React, GRADES, GRADES_META, PROGNOSE, ProgMini, Ic, AnimatedNumber */
 const { useState, useMemo } = React;
 
 function gnum(str) { const n = parseFloat(String(str).replace(",", ".")); return isNaN(n) ? null : n; }
@@ -28,7 +28,7 @@ function prettyKop(kop, i) {
   return kop;
 }
 
-function GradeRow({ vak }) {
+function GradeRow({ vak, index = 0 }) {
   const [open, setOpen] = useState(false);
   const gem = gnum(vak.gemiddelde);
   const numeriek = vak.toetsen.filter((t) => t.n != null);
@@ -37,7 +37,7 @@ function GradeRow({ vak }) {
   const prog = PROGNOSE[NAAM2KEY[vak.naam]];
 
   return (
-    <div className="gr-card" data-open={open} style={{ "--c": vak.kleur }}>
+    <div className="gr-card" data-open={open} style={{ "--c": vak.kleur, animationDelay: (index * 0.04) + "s" }}>
       <button className="gr-main" onClick={() => setOpen((v) => !v)}>
         <span className="gr-badge">{vak.code}</span>
         <span className="gr-name">
@@ -114,7 +114,7 @@ function CijfersView() {
       <div className="kpis">
         <div className="kpi dark">
           <div className="k">Gemiddeld SE-cijfer</div>
-          <div className="v">{fmtNL(overall)}</div>
+          <div className="v"><AnimatedNumber value={overall} decimals={1} format={(v) => v.toFixed(1).replace(".", ",")} /></div>
           <div className="sub">over {cijferVakken.length} vakken met een cijfer</div>
         </div>
         <div className="kpi">
@@ -144,7 +144,7 @@ function CijfersView() {
         </div>
       </div>
 
-      <div className="gr-list">{sorted.map((v) => <GradeRow key={v.naam} vak={v} />)}</div>
+      <div className="gr-list">{sorted.map((v, i) => <GradeRow key={v.naam} vak={v} index={i} />)}</div>
 
       <div className="foot-note">
         <span>SE = schoolexamen · PO = praktische opdracht · HD = handelingsdeel</span>

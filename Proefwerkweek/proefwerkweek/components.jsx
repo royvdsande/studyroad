@@ -1,5 +1,21 @@
-/* global React, SUBJECTS, PROGNOSE, fmtDatum, dagenTot */
-const { useState } = React;
+/* global React, SUBJECTS, PROGNOSE, fmtDatum, dagenTot, Confetti, FX */
+const { useState, useEffect, useRef } = React;
+
+// Telt een getal soepel omhoog bij het verschijnen / wijzigen.
+function AnimatedNumber({ value, decimals = 0, duration = 850, format }) {
+  const [disp, setDisp] = useState(() => (FX && FX.reduce ? value : 0));
+  const prev = useRef(FX && FX.reduce ? value : 0);
+  useEffect(() => {
+    if (!window.FX || !FX.countUp) { setDisp(value); return; }
+    FX.countUp({
+      from: prev.current, to: value, decimals, duration,
+      onUpdate: (v) => setDisp(v),
+    });
+    prev.current = value;
+  }, [value]);
+  const out = format ? format(disp) : (decimals ? disp.toFixed(decimals) : Math.round(disp));
+  return <React.Fragment>{out}</React.Fragment>;
+}
 
 // ---- Icons ----
 const Ic = {
@@ -127,14 +143,45 @@ function CardStatus({ subj, eff }) {
 // ---- Studie-kaart ----
 function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide }) {
   const [openNote, setOpenNote] = useState(false);
+  const [celebrate, setCelebrate] = useState(false);
+  const cardRef = useRef(null);
   const eff = effStatus(subj, besluit);
   const total = subj.onderwerpen.length;
   const checked = subj.onderwerpen.filter((_, i) => done[`${subj.id}::${i}`]).length;
   const pct = total ? (checked / total) * 100 : 0;
+  const isComplete = total > 0 && checked === total;
   const tijdShow = subj.tijd && /^\d/.test(subj.tijd) ? subj.tijd : (subj.tijd || "tijd volgt");
 
+  // Vier het moment dat álle onderwerpen van dit vak afgevinkt zijn.
+  const wasComplete = useRef(isComplete);
+  useEffect(() => {
+    if (isComplete && !wasComplete.current) {
+      setCelebrate(true);
+      if (window.Confetti) {
+        Confetti.burst(cardRef.current, { colors: [subj.kleur, "#fff", ...(window.FX ? FX.colors : [])] });
+      }
+      const t = setTimeout(() => setCelebrate(false), 750);
+      return () => clearTimeout(t);
+    }
+    wasComplete.current = isComplete;
+  }, [isComplete]);
+
+  // Klein vinkje-feestje per onderwerp.
+  const handleToggle = (i, e) => {
+    const turningOn = !done[`${subj.id}::${i}`];
+    if (turningOn && window.Confetti) {
+      const box = e.currentTarget.querySelector(".box");
+      Confetti.pop(box, { colors: [subj.kleur, "#fff"] });
+    }
+    onToggle(subj.id, i);
+  };
+
   return (
-    <div className={"card" + (eff === "gemaakt" || eff === "uitgesteld" ? " is-done" : "")} style={{ "--c": subj.kleur }}>
+    <div
+      ref={cardRef}
+      className={"card" + (eff === "gemaakt" || eff === "uitgesteld" ? " is-done" : "") + (isComplete ? " is-complete" : "") + (celebrate ? " celebrate" : "")}
+      style={{ "--c": subj.kleur }}
+    >
       <div className="card-top">
         <div className="card-badge">{subj.code}</div>
         <div className="card-head">
@@ -159,7 +206,7 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
           const on = !!done[`${subj.id}::${i}`];
           return (
             <li key={i}>
-              <button className="check" data-on={on} onClick={() => onToggle(subj.id, i)}>
+              <button className="check" data-on={on} onClick={(e) => handleToggle(i, e)}>
                 <span className="box">{Ic.check({ stroke: "#fff" })}</span>
                 <span className="check-label">{o}</span>
               </button>
@@ -173,9 +220,9 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
       <div className="card-foot">
         <div className="foot-row">
           <span style={{ color: "var(--ink-soft)" }}>{checked} / {total} onderwerpen geleerd</span>
-          <b style={{ color: pct === 100 ? subj.kleur : "var(--ink-soft)" }}>{pct === 100 ? "klaar!" : Math.round(pct) + "%"}</b>
+          <b className={isComplete ? "done-pop" : ""} style={{ color: pct === 100 ? subj.kleur : "var(--ink-soft)" }}>{pct === 100 ? "klaar! 🎉" : Math.round(pct) + "%"}</b>
         </div>
-        <div className="bar"><i style={{ width: pct + "%" }} /></div>
+        <div className={"bar" + (isComplete ? " full" : "")}><i style={{ width: pct + "%" }} /></div>
         <button className="note-toggle" onClick={() => setOpenNote((v) => !v)}>
           {Ic.note()}{notes[subj.id] ? "Notitie bewerken" : "Notitie toevoegen"}
           {notes[subj.id] && <span style={{ width: 6, height: 6, borderRadius: "50%", background: subj.kleur }} />}
@@ -190,4 +237,4 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
   );
 }
 
-Object.assign(window, { Ic, STATUS, effStatus, StatusBadge, ProgMini, StatusControl, CardStatus, SubjectCard });
+Object.assign(window, { Ic, STATUS, effStatus, StatusBadge, ProgMini, StatusControl, CardStatus, SubjectCard, AnimatedNumber });
