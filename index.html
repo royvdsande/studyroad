@@ -335,6 +335,116 @@ h1, h2, h3 { margin: 0; }
 .v6-nh { display: inline-block; margin-top: 6px; font-size: 10.5px; font-weight: 700; color: var(--st-decide); background: color-mix(in oklab, var(--st-decide) 11%, var(--paper)); padding: 2px 7px; border-radius: 5px; }
 .v6-defer-note { margin: 0 16px 14px; font-size: 12px; color: var(--st-defer); background: color-mix(in oklab, var(--st-defer) 9%, var(--paper)); border-radius: 8px; padding: 8px 11px; display: flex; gap: 7px; align-items: center; }
 
+/* =====================  V6 — UITGEWERKT  ===================== */
+.v6-kpis { margin-top: 16px; }
+
+/* ---- vakkaart: hover-lift + badge-tik + weging-meter ---- */
+.v6-card { transition: box-shadow 0.18s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.v6-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.v6-card-top .vb { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.v6-card:hover .vb { transform: rotate(-7deg) scale(1.07); }
+
+.v6-weeg { display: flex; gap: 2px; padding: 10px 16px 12px; }
+.v6-weeg-seg {
+  height: 8px; border-radius: 3px; min-width: 6px; flex-basis: 0;
+  background: color-mix(in oklab, var(--c) 78%, var(--paper));
+  transform-origin: left center; animation: v6-weeg-in 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+.v6-weeg-seg[data-m="per1"], .v6-weeg-seg[data-m="per2"] { background: color-mix(in oklab, var(--c) 38%, var(--paper)); }
+.v6-weeg:hover .v6-weeg-seg { filter: saturate(1.15); }
+.v6-weeg-seg:hover { transform: scaleY(1.5); }
+
+/* ---- moment-filter: dimmen / oplichten van losse toetsen ---- */
+.v6-toets { transition: opacity 0.3s ease, filter 0.3s ease, background 0.25s ease, transform 0.25s ease; }
+.v6-toets[data-dim="true"] { opacity: 0.32; filter: grayscale(0.55); }
+.v6-toets[data-hot="true"] {
+  background: color-mix(in oklab, var(--c) 7%, var(--paper));
+  box-shadow: inset 3px 0 0 var(--c);
+}
+.count.is-filter {
+  color: var(--ink); font-weight: 700; background: var(--bg-2);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: 3px 11px;
+  animation: fx-badge-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ---- jaarlijn ---- */
+.v6-timeline {
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm); padding: 18px 22px 16px; margin-top: 18px;
+  animation: fx-rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: 0.08s;
+}
+.v6tl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 16px; }
+.v6tl-title { font-family: var(--ff-display); font-size: 16px; letter-spacing: -0.01em; }
+.v6tl-sub { font-size: 12px; color: var(--ink-soft); margin-top: 3px; max-width: 66ch; line-height: 1.5; }
+.v6tl-sub b { color: var(--ink); font-weight: 700; }
+.v6tl-clear {
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; flex: none;
+  font-size: 11.5px; font-weight: 700; color: var(--ink-soft);
+  background: var(--bg-2); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px;
+  transition: all 0.14s ease; animation: fx-badge-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.v6tl-clear:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.v6tl-track {
+  position: relative; display: grid; grid-template-columns: repeat(var(--cols, 4), 1fr); gap: 8px;
+}
+.v6tl-track::after {
+  content: ""; position: absolute; left: 4px; right: 4px; top: 156px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--line-2) 12%, var(--line-2) 88%, transparent);
+}
+.v6tl-col {
+  display: flex; flex-direction: column; align-items: center; padding: 0;
+  background: none; cursor: pointer; transition: transform 0.16s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease, filter 0.25s ease;
+}
+.v6tl-col:hover { transform: translateY(-3px); }
+.v6tl-col[data-dim="true"] { opacity: 0.42; filter: grayscale(0.45); }
+.v6tl-bar-wrap {
+  position: relative; height: 156px; width: 100%; padding-top: 22px;
+  display: flex; flex-direction: column; justify-content: flex-end; align-items: center;
+}
+.v6tl-tot { position: absolute; top: 0; left: 0; right: 0; text-align: center; line-height: 1; }
+.v6tl-tot b { font-family: var(--ff-display); font-size: 15px; }
+.v6tl-tot small { font-size: 10px; color: var(--ink-faint); margin-left: 1px; }
+.v6tl-bar {
+  width: min(62px, 72%); display: flex; flex-direction: column-reverse;
+  border-radius: 8px 8px 3px 3px; overflow: hidden;
+  transform-origin: bottom center; box-shadow: 0 2px 9px rgba(34, 31, 27, 0.09);
+  animation: v6tl-grow 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both; animation-delay: var(--delay);
+  transition: box-shadow 0.18s ease;
+}
+.v6tl-col:hover .v6tl-bar { box-shadow: 0 7px 18px rgba(34, 31, 27, 0.16); }
+.v6tl-col[data-on="true"] .v6tl-bar { box-shadow: 0 0 0 2px var(--ink), 0 7px 18px rgba(34, 31, 27, 0.18); }
+.v6tl-seg {
+  display: block; width: 100%; background: var(--c); flex-shrink: 0;
+  box-shadow: inset 0 1px 0 rgba(255, 253, 249, 0.55);
+  opacity: 0; animation: v6tl-seg-in 0.4s ease both; animation-delay: var(--seg-delay);
+}
+.v6tl-seg[data-hand="true"] {
+  background: repeating-linear-gradient(45deg, color-mix(in oklab, var(--c) 55%, var(--paper)) 0 3px, color-mix(in oklab, var(--c) 18%, var(--paper)) 3px 6px);
+}
+.v6tl-node { margin-top: -7px; z-index: 1; }
+.v6tl-node .dot {
+  display: block; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line-2);
+  box-shadow: 0 1px 3px rgba(34, 31, 27, 0.12); transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.v6tl-node .dot[data-season="najaar"]   { border-color: var(--gold); }
+.v6tl-node .dot[data-season="winter"]   { border-color: var(--teal); }
+.v6tl-node .dot[data-season="voorjaar"] { border-color: var(--st-done); }
+.v6tl-col:hover .v6tl-node .dot,
+.v6tl-col[data-on="true"] .v6tl-node .dot { transform: scale(1.4); }
+.v6tl-meta { margin-top: 11px; text-align: center; }
+.v6tl-meta b { display: block; font-family: var(--ff-display); font-size: 13px; }
+.v6tl-meta span { font-size: 10.5px; color: var(--ink-faint); }
+.v6tl-legend { display: flex; flex-wrap: wrap; gap: 7px 13px; margin-top: 16px; padding-top: 13px; border-top: 1px dashed var(--line); }
+.v6tl-key { display: inline-flex; align-items: center; gap: 5px; font-family: var(--ff-mono); font-size: 10.5px; color: var(--ink-soft); }
+.v6tl-key .sw { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+
+@keyframes v6tl-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes v6tl-seg-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes v6-weeg-in { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
 /* =====================  CIJFERS  ===================== */
 .gr-list { display: flex; flex-direction: column; gap: 11px; }
 .gr-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; transition: box-shadow 0.16s ease; }
@@ -409,6 +519,32 @@ h1, h2, h3 { margin: 0; }
   background: color-mix(in oklab, var(--c) 13%, var(--paper)); padding: 2px 7px; border-radius: 6px;
 }
 
+/* CE-banner met aftelteller */
+.ce-banner-body { flex: 1; min-width: 220px; }
+.ce-count {
+  flex: none; align-self: stretch; min-width: 92px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 10px 14px; border-radius: var(--r-sm); line-height: 1.05;
+  background: color-mix(in oklab, var(--gold) 16%, var(--paper));
+  border: 1px solid color-mix(in oklab, var(--gold) 34%, var(--line));
+}
+.ce-count b { font-family: var(--ff-display); font-size: 30px; color: oklch(0.46 0.11 75); font-variant-numeric: tabular-nums; }
+.ce-count span { font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: oklch(0.5 0.1 75); }
+.ce-count small { font-size: 10.5px; color: var(--ink-faint); margin-top: 3px; font-family: var(--ff-mono); }
+
+/* CE-kaart: glans-veeg op hover + zacht pulserend CE-label */
+.ce-card::before {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%;
+  background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-18deg); opacity: 0; pointer-events: none;
+}
+.ce-card:hover::before { animation: ce-sheen 0.85s ease; }
+.ce-card .ce-badge { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.ce-card:hover .ce-badge { transform: rotate(-6deg) scale(1.07); }
+.ce-card .ce-tag { animation: ce-tag-pulse 3.4s ease-in-out infinite; }
+@keyframes ce-sheen { from { left: -60%; opacity: 1; } to { left: 130%; opacity: 1; } }
+@keyframes ce-tag-pulse { 0%, 100% { opacity: 0.72; } 50% { opacity: 1; } }
+
 /* =====================  UTIL  ===================== */
 .controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 4px 0 0; }
 .search { flex: 1; min-width: 200px; max-width: 360px; display: flex; align-items: center; gap: 9px; background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 9px 15px; box-shadow: var(--shadow-sm); }
@@ -446,6 +582,16 @@ h1, h2, h3 { margin: 0; }
 @media (max-width: 520px) {
   .kpis { grid-template-columns: 1fr 1fr; }
   .viewbar h1 { font-size: 22px; }
+  .v6-timeline { padding: 16px 14px 14px; }
+  .v6tl-track { gap: 4px; }
+  .v6tl-track::after { top: 126px; }
+  .v6tl-bar-wrap { height: 126px; padding-top: 20px; }
+  .v6tl-bar { width: min(40px, 82%); }
+  .v6tl-meta b { font-size: 11.5px; }
+  .v6tl-meta span { font-size: 9.5px; }
+  .ce-banner { flex-wrap: wrap; }
+  .ce-count { align-self: stretch; width: 100%; flex-direction: row; gap: 8px; }
+  .ce-count small { margin-top: 0; margin-left: auto; }
 }
 
 /* =================================================================
@@ -811,7 +957,10 @@ const V6 = [
 //  Eerste tijdvak: vr 14 mei – di 1 jun 2027 · herkansing (2e tijdvak): 22–29 jun 2027
 //  Per-vak data volgen in het definitieve rooster; duur is het vaste CE-format.
 // -----------------------------------------------------------------
-const CE_VENSTER = { eerste: "vr 14 mei – di 1 jun 2027", tweede: "di 22 – di 29 jun 2027" };
+const CE_VENSTER = {
+  eerste: "vr 14 mei – di 1 jun 2027", tweede: "di 22 – di 29 jun 2027",
+  eersteIso: "2027-05-14", tweedeIso: "2027-06-22",
+};
 const EINDEXAMENS = [
   { id: "nederlands",  naam: "Nederlands",       code: "NE", kleur: KLEUR.nederlands,  duur: "3 uur" },
   { id: "natuurkunde", naam: "Natuurkunde",      code: "NA", kleur: KLEUR.natuurkunde, duur: "3 uur" },
@@ -2079,42 +2228,245 @@ Object.assign(window, { CijfersView });
   </script>
   <script type="text/babel" data-presets="react">
 ;(function () {
-/* global React, V6, SUBJECTS, MOMENT_META, Ic, effStatus, EINDEXAMENS, CE_VENSTER */
+/* global React, V6, SUBJECTS, MOMENT_META, Ic, effStatus, EINDEXAMENS, CE_VENSTER, AnimatedNumber, dagenTot */
+const { useState, useMemo, useRef, useEffect } = React;
 
-function V6Card({ vak, index = 0 }) {
-  const sorted = [...vak.toetsen].sort((a, b) => MOMENT_META[a.moment].order - MOMENT_META[b.moment].order);
-  const totaal = vak.toetsen.reduce((n, t) => n + (t.wf || 0), 0);
+// -----------------------------------------------------------------
+//  Afgeleide data over alle V6-toetsen (gedeeld door meerdere views)
+// -----------------------------------------------------------------
+function useMomentData() {
+  return useMemo(() => {
+    const byMoment = {};
+    Object.keys(MOMENT_META).forEach((m) => (byMoment[m] = []));
+    V6.forEach((v) => v.toetsen.forEach((t) => byMoment[t.moment].push({ ...t, vak: v })));
+
+    const alle = V6.flatMap((v) => v.toetsen.map((t) => ({ ...t, vak: v })));
+    const totaalToetsen = alle.length;
+    const herkansbaar = alle.filter((t) => t.herkansbaar).length;
+    const zwaarste = alle.reduce((a, b) => (b.wf > a.wf ? b : a), alle[0]);
+    const totaalWf = alle.reduce((n, t) => n + (t.wf || 0), 0);
+    const maxMomentWf = Math.max(...Object.values(byMoment).map((arr) => arr.reduce((n, t) => n + t.wf, 0)));
+    return { byMoment, alle, totaalToetsen, herkansbaar, zwaarste, totaalWf, maxMomentWf };
+  }, []);
+}
+
+// -----------------------------------------------------------------
+//  KPI-band — samenvatting van het V6-jaar
+// -----------------------------------------------------------------
+function V6Kpis({ data }) {
+  const { totaalToetsen, herkansbaar, zwaarste, byMoment } = data;
+  const ceDagen = Math.max(0, dagenTot(CE_VENSTER.eersteIso) || 0);
+  const momenten = Object.values(byMoment).filter((arr) => arr.length).length;
+
   return (
-    <div className="v6-card" style={{ "--c": vak.kleur, animationDelay: (index * 0.04) + "s" }}>
+    <div className="kpis v6-kpis">
+      <div className="kpi dark">
+        <div className="k">Toetsen volgend jaar</div>
+        <div className="v"><AnimatedNumber value={totaalToetsen} /></div>
+        <div className="sub">over {V6.length} vakken en {momenten} toetsmomenten</div>
+      </div>
+      <div className="kpi">
+        <div className="k">Herkansbaar</div>
+        <div className="v" style={{ color: "var(--st-done)" }}>
+          <AnimatedNumber value={herkansbaar} /><small>/{totaalToetsen}</small>
+        </div>
+        <div className="sub">{totaalToetsen - herkansbaar} toetsen kun je niet overdoen</div>
+      </div>
+      <div className="kpi">
+        <div className="k">Zwaarste toets</div>
+        <div className="v" style={{ color: zwaarste.vak.kleur }}>
+          <AnimatedNumber value={zwaarste.wf} /><small>%</small>
+        </div>
+        <div className="sub">{zwaarste.vak.naam} · {MOMENT_META[zwaarste.moment].kort}</div>
+      </div>
+      <div className="kpi">
+        <div className="k">Centraal examen 2027</div>
+        <div className="v" style={{ color: "oklch(0.5 0.11 75)" }}>
+          <AnimatedNumber value={ceDagen} /><small> dagen</small>
+        </div>
+        <div className="sub">eerste tijdvak vanaf 14 mei</div>
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------
+//  Jaarlijn — gestapelde balken per toetsmoment (klikbaar = filter)
+// -----------------------------------------------------------------
+function V6Timeline({ data, active, onPick }) {
+  const { byMoment, maxMomentWf } = data;
+  const momenten = Object.keys(MOMENT_META);
+
+  return (
+    <div className="v6-timeline" data-filtering={active ? "true" : "false"}>
+      <div className="v6tl-head">
+        <div>
+          <div className="v6tl-title">De V6-jaarlijn</div>
+          <div className="v6tl-sub">
+            Balkhoogte = opgeteld gewicht per moment · elk blokje is één toets.
+            <b> Tik een kolom aan</b> om alleen dat moment te bekijken.
+          </div>
+        </div>
+        {active && (
+          <button className="v6tl-clear" onClick={() => onPick(null)}>
+            {Ic.cross({ width: 13, height: 13 })} filter wissen
+          </button>
+        )}
+      </div>
+
+      <div className="v6tl-track" style={{ "--cols": momenten.length }}>
+        {momenten.map((m, mi) => {
+          const items = (byMoment[m] || []).slice().sort((a, b) => b.wf - a.wf);
+          const totW = items.reduce((n, t) => n + t.wf, 0);
+          const hPct = maxMomentWf ? Math.max(6, (totW / maxMomentWf) * 100) : 0;
+          const isOn = active === m;
+          const isDim = active && !isOn;
+          return (
+            <button
+              key={m}
+              className="v6tl-col"
+              data-on={isOn}
+              data-dim={isDim}
+              style={{ "--delay": (mi * 0.09) + "s" }}
+              onClick={() => onPick(isOn ? null : m)}
+              aria-pressed={isOn}
+            >
+              <div className="v6tl-bar-wrap">
+                <span className="v6tl-tot"><b>{totW}</b><small>%</small></span>
+                <div className="v6tl-bar" style={{ height: hPct + "%" }}>
+                  {items.map((t, ti) => (
+                    <span
+                      key={ti}
+                      className="v6tl-seg"
+                      data-hand={!t.wf}
+                      title={`${t.vak.naam} · ${t.soort} · ${t.wf ? t.wf + "%" : "handelingsdeel"}`}
+                      style={{
+                        "--c": t.vak.kleur,
+                        "--seg-delay": (mi * 0.09 + 0.25 + ti * 0.06) + "s",
+                        flexGrow: t.wf || 0,
+                        flexBasis: t.wf ? 0 : "7px",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+              <span className="v6tl-node"><span className="dot" data-season={MOMENT_META[m].seizoen} /></span>
+              <div className="v6tl-meta">
+                <b>{MOMENT_META[m].kort}</b>
+                <span>{items.length} toets{items.length === 1 ? "" : "en"} · {MOMENT_META[m].seizoen}</span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="v6tl-legend">
+        {V6.map((v) => (
+          <span key={v.id} className="v6tl-key"><span className="sw" style={{ background: v.kleur }} />{v.code}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------
+//  Vakkaart met weging-meter + moment-filter
+// -----------------------------------------------------------------
+function V6Card({ vak, index = 0, active }) {
+  const sorted = useMemo(
+    () => [...vak.toetsen].sort((a, b) => MOMENT_META[a.moment].order - MOMENT_META[b.moment].order),
+    [vak]
+  );
+  const totaal = vak.toetsen.reduce((n, t) => n + (t.wf || 0), 0);
+  const weegToetsen = sorted.filter((t) => t.wf);
+
+  return (
+    <div className="v6-card" style={{ "--c": vak.kleur, animationDelay: (index * 0.05) + "s" }}>
       <div className="v6-card-top">
         <div className="vb">{vak.code}</div>
         <div className="vn">{vak.naam}</div>
         <div className="vw"><b>{totaal}%</b><span>V6-deel</span></div>
       </div>
-      {sorted.map((t, i) => (
-        <div className="v6-toets" key={i}>
-          <div className="v6-toets-head">
-            <span className="v6-moment" data-m={t.moment}>{MOMENT_META[t.moment].kort}</span>
-            <span className="vt-soort">{t.soort}{t.duur !== "—" && <span className="dur"> · {t.duur}</span>}</span>
-            <span className={"vt-wf" + (t.wf ? "" : " hand")}>{t.wf ? `${t.wf}%` : "hand."}</span>
-          </div>
-          <div className="v6-stof">{t.stof}</div>
-          {!t.herkansbaar && <span className="v6-nh">niet herkansbaar</span>}
+
+      {weegToetsen.length > 0 && (
+        <div className="v6-weeg" title="Verdeling van het gewicht over het jaar">
+          {weegToetsen.map((t, i) => (
+            <span
+              key={i}
+              className="v6-weeg-seg"
+              data-m={t.moment}
+              title={`${MOMENT_META[t.moment].kort} · ${t.wf}%`}
+              style={{ "--c": vak.kleur, flexGrow: t.wf, animationDelay: (index * 0.05 + 0.2 + i * 0.07) + "s" }}
+            />
+          ))}
         </div>
-      ))}
+      )}
+
+      {sorted.map((t, i) => {
+        const dim = active && t.moment !== active;
+        const hot = active && t.moment === active;
+        return (
+          <div className="v6-toets" key={i} data-dim={dim ? "true" : "false"} data-hot={hot ? "true" : "false"}>
+            <div className="v6-toets-head">
+              <span className="v6-moment" data-m={t.moment}>{MOMENT_META[t.moment].kort}</span>
+              <span className="vt-soort">{t.soort}{t.duur !== "—" && <span className="dur"> · {t.duur}</span>}</span>
+              <span className={"vt-wf" + (t.wf ? "" : " hand")}>{t.wf ? `${t.wf}%` : "hand."}</span>
+            </div>
+            <div className="v6-stof">{t.stof}</div>
+            {!t.herkansbaar && <span className="v6-nh">niet herkansbaar</span>}
+          </div>
+        );
+      })}
     </div>
   );
 }
 
+// -----------------------------------------------------------------
+//  CE-aftelbanner
+// -----------------------------------------------------------------
+function CeBanner() {
+  const dagen = Math.max(0, dagenTot(CE_VENSTER.eersteIso) || 0);
+  const weken = Math.round(dagen / 7);
+  return (
+    <div className="ce-banner">
+      <div className="ic">{Ic.cal()}</div>
+      <div className="ce-banner-body">
+        <div className="at">Eerste tijdvak: {CE_VENSTER.eerste}</div>
+        <div className="ad">
+          Na de schoolexamens volgt het landelijke centraal examen. Je <b>eindcijfer</b> is het gemiddelde van je
+          schoolexamen (SE) en je centraal examen (CE) — elk telt ongeveer <b>de helft</b> mee. Herkansing in het tweede
+          tijdvak ({CE_VENSTER.tweede}). De exacte data per vak komen in het definitieve examenrooster 2027.
+        </div>
+      </div>
+      <div className="ce-count" title="Aftellen tot het eerste centraal examen">
+        <b><AnimatedNumber value={dagen} /></b>
+        <span>dagen</span>
+        <small>≈ {weken} weken</small>
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------
+//  V6-view
+// -----------------------------------------------------------------
 function V6View({ besluiten }) {
+  const data = useMomentData();
+  const [active, setActive] = useState(null); // gekozen moment-filter
+
   // pwwk3-toetsen die je hebt uitgesteld → in te halen begin V6
   const uitgesteld = SUBJECTS.filter((s) => effStatus(s, besluiten[s.id]) === "uitgesteld");
+
   // sorteer vakken op moment van eerste toets, dan naam
-  const vakken = [...V6].sort((a, b) => {
+  const vakkenAll = useMemo(() => [...V6].sort((a, b) => {
     const ao = Math.min(...a.toetsen.map((t) => MOMENT_META[t.moment].order));
     const bo = Math.min(...b.toetsen.map((t) => MOMENT_META[t.moment].order));
     return ao - bo || a.naam.localeCompare(b.naam);
-  });
+  }), []);
+
+  // bij een filter alleen vakken tonen die op dat moment een toets hebben
+  const vakken = active ? vakkenAll.filter((v) => v.toetsen.some((t) => t.moment === active)) : vakkenAll;
+  const filterCount = active ? data.byMoment[active].length : 0;
 
   return (
     <div className="page section-pad">
@@ -2132,6 +2484,10 @@ function V6View({ besluiten }) {
           <span><span className="sw" style={{ background: "color-mix(in oklab, var(--st-decide) 22%, var(--paper))" }} />Niet herkansbaar</span>
         </div>
       </div>
+
+      <V6Kpis data={data} />
+
+      <V6Timeline data={data} active={active} onPick={setActive} />
 
       {uitgesteld.length > 0 && (
         <React.Fragment>
@@ -2161,10 +2517,12 @@ function V6View({ besluiten }) {
       <div className="sec-head">
         <h2>V6 — programma van toetsing en afsluiting</h2>
         <div className="hr" />
-        <span className="count">{V6.length} vakken</span>
+        {active
+          ? <span className="count is-filter">{MOMENT_META[active].kort} · {filterCount} toets{filterCount === 1 ? "" : "en"}</span>
+          : <span className="count">{V6.length} vakken</span>}
       </div>
-      <div className="v6-grid">
-        {vakken.map((v, i) => <V6Card key={v.id} vak={v} index={i} />)}
+      <div className="v6-grid" key={active || "all"}>
+        {vakken.map((v, i) => <V6Card key={v.id} vak={v} index={i} active={active} />)}
       </div>
 
       <div className="sec-head">
@@ -2172,20 +2530,10 @@ function V6View({ besluiten }) {
         <div className="hr" />
         <span className="count">{EINDEXAMENS.length} vakken</span>
       </div>
-      <div className="ce-banner">
-        <div className="ic">{Ic.cal()}</div>
-        <div>
-          <div className="at">Eerste tijdvak: {CE_VENSTER.eerste}</div>
-          <div className="ad">
-            Na de schoolexamens volgt het landelijke centraal examen. Je <b>eindcijfer</b> is het gemiddelde van je
-            schoolexamen (SE) en je centraal examen (CE) — elk telt ongeveer <b>de helft</b> mee. Herkansing in het tweede
-            tijdvak ({CE_VENSTER.tweede}). De exacte data per vak komen in het definitieve examenrooster 2027.
-          </div>
-        </div>
-      </div>
+      <CeBanner />
       <div className="ce-grid">
         {EINDEXAMENS.map((e, i) => (
-          <div className="ce-card" key={e.id} style={{ "--c": e.kleur, animationDelay: (i * 0.03) + "s" }}>
+          <div className="ce-card" key={e.id} style={{ "--c": e.kleur, animationDelay: (i * 0.04) + "s" }}>
             <div className="ce-badge">{e.code}</div>
             <div className="ce-body">
               <div className="ce-name">{e.naam}</div>

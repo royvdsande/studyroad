@@ -174,7 +174,10 @@ const V6 = [
 //  Eerste tijdvak: vr 14 mei – di 1 jun 2027 · herkansing (2e tijdvak): 22–29 jun 2027
 //  Per-vak data volgen in het definitieve rooster; duur is het vaste CE-format.
 // -----------------------------------------------------------------
-const CE_VENSTER = { eerste: "vr 14 mei – di 1 jun 2027", tweede: "di 22 – di 29 jun 2027" };
+const CE_VENSTER = {
+  eerste: "vr 14 mei – di 1 jun 2027", tweede: "di 22 – di 29 jun 2027",
+  eersteIso: "2027-05-14", tweedeIso: "2027-06-22",
+};
 const EINDEXAMENS = [
   { id: "nederlands",  naam: "Nederlands",       code: "NE", kleur: KLEUR.nederlands,  duur: "3 uur" },
   { id: "natuurkunde", naam: "Natuurkunde",      code: "NA", kleur: KLEUR.natuurkunde, duur: "3 uur" },
