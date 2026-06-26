@@ -103,8 +103,8 @@ function V6View({ besluiten }) {
         </div>
       </div>
       <div className="ce-grid">
-        {EINDEXAMENS.map((e) => (
-          <div className="ce-card" key={e.id} style={{ "--c": e.kleur }}>
+        {EINDEXAMENS.map((e, i) => (
+          <div className="ce-card" key={e.id} style={{ "--c": e.kleur, "--i": i }}>
             <div className="ce-badge">{e.code}</div>
             <div className="ce-body">
               <div className="ce-name">{e.naam}</div>

@@ -1,5 +1,6 @@
 /* global React, ReactDOM, SUBJECTS, PROGNOSE, fmtDatum, dagenTot, sortKey,
-   Ic, effStatus, StatusBadge, SubjectCard, CijfersView, V6View */
+   Ic, effStatus, StatusBadge, SubjectCard, CijfersView, V6View,
+   fireConfetti, fireSparkle, fireMegaCelebration, showToast, wiggleCard */
 const { useState, useEffect, useRef, useMemo } = React;
 
 const LS = { done: "pwwk.done.v2", notes: "pwwk.notes.v2", besluit: "pwwk.besluit.v2", view: "pwwk.view.v2" };
@@ -69,11 +70,35 @@ function Agenda({ subjects, done, besluiten, onOpen }) {
   );
 }
 
+// ---------- Countdown naar eerstvolgende toets ----------
+function useCountdown(targetIso, targetTime) {
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  if (!targetIso) return null;
+  const t = (targetTime && /^\d/.test(targetTime)) ? targetTime.split("–")[0] : "08:30";
+  const [h, m] = t.split(":").map(Number);
+  const target = new Date(targetIso + "T00:00:00");
+  target.setHours(h || 0, m || 0, 0, 0);
+  const ms = Math.max(0, target.getTime() - now);
+  return {
+    d: Math.floor(ms / 864e5),
+    h: Math.floor((ms % 864e5) / 36e5),
+    m: Math.floor((ms % 36e5) / 6e4),
+    s: Math.floor((ms % 6e4) / 1e3),
+    done: ms === 0,
+  };
+}
+
 // ---------- pwwk3 view ----------
 function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRefs }) {
+  const [q, setQ] = useState("");
   const total = SUBJECTS.reduce((n, s) => n + s.onderwerpen.length, 0);
   const doneN = SUBJECTS.reduce((n, s) => n + s.onderwerpen.filter((_, i) => done[`${s.id}::${i}`]).length, 0);
   const pct = total ? Math.round((doneN / total) * 100) : 0;
+  const vakkenKlaar = SUBJECTS.filter((s) => s.onderwerpen.length && s.onderwerpen.every((_, i) => done[`${s.id}::${i}`])).length;
 
   const eff = (s) => effStatus(s, besluiten[s.id]);
   const teBeslissen = SUBJECTS.filter((s) => eff(s) === "beslissen");
@@ -87,13 +112,22 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
     .filter((s) => s.datum && s.datum >= TODAY && eff(s) !== "gemaakt")
     .sort((a, b) => sortKey(a) - sortKey(b))[0];
 
+  const cd = useCountdown(aankomend?.datum, aankomend?.tijd);
+
+  const filtered = SUBJECTS.filter((s) => {
+    if (!q.trim()) return true;
+    const hay = (s.naam + " " + s.onderwerpen.join(" ") + " " + (s.notitie || "")).toLowerCase();
+    return hay.includes(q.toLowerCase());
+  });
+
   return (
     <div className="page section-pad">
       <div className="kpis">
-        <div className="kpi dark">
+        <div className={"kpi dark" + (pct === 100 ? " celebrate" : "")}>
           <div className="k">Studievoortgang</div>
-          <div className="v">{pct}<small>%</small></div>
-          <div className="sub">{doneN} van {total} onderwerpen geleerd</div>
+          <div className="v" data-pct={pct}>{pct}<small>%</small></div>
+          <div className="sub">{doneN} van {total} onderwerpen · {vakkenKlaar}/{SUBJECTS.length} vakken klaar</div>
+          {pct === 100 && <div className="kpi-sparkle" aria-hidden="true">✦</div>}
         </div>
         <div className={"kpi" + (teBeslissen.length ? " alert" : "")}>
           <div className="k">Te beslissen</div>
@@ -111,6 +145,22 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
           <div className="sub">{aankomend ? `Eerstvolgende: ${aankomend.naam}, ${fmtDatum(aankomend.datum)}` : "Frans ging goed"}</div>
         </div>
       </div>
+
+      {aankomend && cd && !cd.done && (
+        <div className="countdown-strip">
+          <div className="cs-label">
+            <span className="dot" style={{ background: aankomend.kleur }} />
+            Nog even tot <b>{aankomend.naam}</b> · {fmtDatum(aankomend.datum)}
+          </div>
+          <div className="cs-clock">
+            {[["d", cd.d, "dgn"], ["h", cd.h, "uur"], ["m", cd.m, "min"], ["s", cd.s, "sec"]].map(([k, v, l]) => (
+              <div className="cs-unit" key={k}>
+                <b>{String(v).padStart(2, "0")}</b><span>{l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="alerts">
         <div className="alert-card" data-kind="operatie">
@@ -145,6 +195,32 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
       {teBeslissen.length > 0 && (
         <div className="agenda-unplanned">
           <div className="uhead">{Ic.alert({ width: 15, height: 15 })} Nog te beslissen — gemist door operatie, datum onzeker</div>
+          <div className="agenda-items">
+            {teBeslissen.map((s) => {
+              const totalS = s.onderwerpen.length;
+              const ch = s.onderwerpen.filter((_, i) => done[`${s.id}::${i}`]).length;
+              const pctS = totalS ? (ch / totalS) * 100 : 0;
+              return (
+                <button className="agenda-row" key={s.id} style={{ "--c": s.kleur }} onClick={() => {
+                  const el = cardRefs.current[s.id];
+                  if (el) { window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 80, behavior: "smooth" }); wiggleCard(el); }
+                }}>
+                  <span className="ab">{s.code}</span>
+                  <span>
+                    <span className="an">{s.naam}</span>
+                    <span className="am"><span>datum onzeker</span><span>{s.type}</span></span>
+                  </span>
+                  <span className="agenda-right">
+                    <StatusBadge s="beslissen" />
+                    <span className="prog">
+                      <span className="mini"><i style={{ width: pctS + "%" }} /></span>
+                      <small>{Math.round(pctS)}%</small>
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -153,15 +229,25 @@ function Pwwk3View({ done, notes, besluiten, onToggle, onNote, onDecide, cardRef
         <div className="hr" />
         <span className="count">{SUBJECTS.length} vakken</span>
       </div>
+
+      <div className="controls">
+        <div className="search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ink-faint)" strokeWidth="2.2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" /></svg>
+          <input placeholder="Zoek een vak of onderwerp…" value={q} onChange={(e) => setQ(e.target.value)} />
+        </div>
+      </div>
+
       <div className="grid">
-        {SUBJECTS.map((s) => (
-          <div key={s.id} ref={(el) => (cardRefs.current[s.id] = el)}>
+        {filtered.length ? filtered.map((s, idx) => (
+          <div key={s.id} ref={(el) => (cardRefs.current[s.id] = el)} className="grid-cell" style={{ "--i": idx }}>
             <SubjectCard
               subj={s} done={done} notes={notes} besluit={besluiten[s.id]}
               onToggle={onToggle} onNote={onNote} onDecide={onDecide}
             />
           </div>
-        ))}
+        )) : (
+          <div className="empty"><b>Niets gevonden</b>Geen vak of onderwerp matcht “{q}”.</div>
+        )}
       </div>
 
       <div className="foot-note">
@@ -218,6 +304,7 @@ function App() {
   const [besluiten, setBesluiten] = useState(() => ({ ...DEFAULT_BESLUIT, ...load(LS.besluit, {}) }));
   const [view, setView] = useState(() => load(LS.view, "pwwk3"));
   const cardRefs = useRef({});
+  const celebratedAll = useRef(false);
 
   useEffect(() => localStorage.setItem(LS.done, JSON.stringify(done)), [done]);
   useEffect(() => localStorage.setItem(LS.notes, JSON.stringify(notes)), [notes]);
@@ -225,7 +312,48 @@ function App() {
   useEffect(() => localStorage.setItem(LS.view, JSON.stringify(view)), [view]);
   useEffect(() => { window.scrollTo({ top: 0 }); }, [view]);
 
-  const toggle = (id, i) => setDone((p) => ({ ...p, [`${id}::${i}`]: !p[`${id}::${i}`] }));
+  const totalTopics = SUBJECTS.reduce((n, s) => n + s.onderwerpen.length, 0);
+  const doneTopics = SUBJECTS.reduce((n, s) => n + s.onderwerpen.filter((_, i) => done[`${s.id}::${i}`]).length, 0);
+  const allDone = totalTopics > 0 && doneTopics === totalTopics;
+
+  useEffect(() => {
+    if (allDone && !celebratedAll.current) {
+      celebratedAll.current = true;
+      setTimeout(() => {
+        fireMegaCelebration();
+        showToast("Alles afgevinkt — je bent helemaal klaar! 🎉", "mega");
+      }, 200);
+    }
+    if (!allDone) celebratedAll.current = false;
+  }, [allDone]);
+
+  function toggle(id, i, evt) {
+    const subj = SUBJECTS.find((s) => s.id === id);
+    if (!subj) return;
+    const before = subj.onderwerpen.every((_, k) => done[`${id}::${k}`]);
+    const willCheck = !done[`${id}::${i}`];
+
+    if (evt && willCheck) {
+      const box = evt.currentTarget?.querySelector(".box");
+      const r = box ? box.getBoundingClientRect() : null;
+      if (r) fireSparkle(r.left + r.width / 2, r.top + r.height / 2, subj.kleur);
+    }
+
+    setDone((prev) => {
+      const next = { ...prev, [`${id}::${i}`]: !prev[`${id}::${i}`] };
+      const after = subj.onderwerpen.every((_, k) => next[`${id}::${k}`]);
+      if (!before && after) {
+        const el = cardRefs.current[id];
+        const r = el ? el.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 };
+        setTimeout(() => {
+          fireConfetti(r.left + r.width / 2, r.top + r.height / 2, subj.kleur);
+          wiggleCard(el);
+          showToast(`${subj.naam} — alle stof afgevinkt!`, "success");
+        }, 40);
+      }
+      return next;
+    });
+  }
   const setNote = (id, v) => setNotes((p) => ({ ...p, [id]: v }));
   const setDecide = (id, v) => setBesluiten((p) => ({ ...p, [id]: v }));
 
@@ -233,7 +361,7 @@ function App() {
   const m = VIEW_META[view];
 
   return (
-    <div className="shell">
+    <div className="shell" data-all-done={allDone}>
       <Rail view={view} setView={setView} teBeslissen={teBeslissen}
         onReset={() => { if (confirm("Vinkjes, notities en keuzes wissen?")) { setDone({}); setNotes({}); setBesluiten({ ...DEFAULT_BESLUIT }); } }} />
       <main className="main">
@@ -245,9 +373,11 @@ function App() {
             </div>
           </div>
         </div>
+        <div className="view-content" key={view}>
         {view === "pwwk3" && <Pwwk3View done={done} notes={notes} besluiten={besluiten} onToggle={toggle} onNote={setNote} onDecide={setDecide} cardRefs={cardRefs} />}
         {view === "v6" && <V6View besluiten={besluiten} />}
         {view === "cijfers" && <CijfersView />}
+        </div>
       </main>
     </div>
   );

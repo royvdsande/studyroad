@@ -1,4 +1,4 @@
-/* global React, SUBJECTS, PROGNOSE, fmtDatum, dagenTot */
+/* global React, SUBJECTS, PROGNOSE, fmtDatum, dagenTot, popElement */
 const { useState } = React;
 
 // ---- Icons ----
@@ -132,9 +132,10 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
   const checked = subj.onderwerpen.filter((_, i) => done[`${subj.id}::${i}`]).length;
   const pct = total ? (checked / total) * 100 : 0;
   const tijdShow = subj.tijd && /^\d/.test(subj.tijd) ? subj.tijd : (subj.tijd || "tijd volgt");
+  const isComplete = pct === 100 && eff !== "uitgesteld";
 
   return (
-    <div className={"card" + (eff === "gemaakt" || eff === "uitgesteld" ? " is-done" : "")} style={{ "--c": subj.kleur }}>
+    <div className={"card" + (eff === "gemaakt" || eff === "uitgesteld" ? " is-done" : "") + (isComplete ? " is-complete" : "")} style={{ "--c": subj.kleur }}>
       <div className="card-top">
         <div className="card-badge">{subj.code}</div>
         <div className="card-head">
@@ -159,7 +160,7 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
           const on = !!done[`${subj.id}::${i}`];
           return (
             <li key={i}>
-              <button className="check" data-on={on} onClick={() => onToggle(subj.id, i)}>
+              <button className="check" data-on={on} onClick={(e) => { popElement(e.currentTarget.querySelector(".box")); onToggle(subj.id, i, e); }}>
                 <span className="box">{Ic.check({ stroke: "#fff" })}</span>
                 <span className="check-label">{o}</span>
               </button>
@@ -171,6 +172,7 @@ function SubjectCard({ subj, done, notes, besluit, onToggle, onNote, onDecide })
       {subj.notitie && <div className="tip">{Ic.info()}<span>{subj.notitie}</span></div>}
 
       <div className="card-foot">
+        {isComplete && <div className="complete-banner">✓ Alle stof afgevinkt</div>}
         <div className="foot-row">
           <span style={{ color: "var(--ink-soft)" }}>{checked} / {total} onderwerpen geleerd</span>
           <b style={{ color: pct === 100 ? subj.kleur : "var(--ink-soft)" }}>{pct === 100 ? "klaar!" : Math.round(pct) + "%"}</b>

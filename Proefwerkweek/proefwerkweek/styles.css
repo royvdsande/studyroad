@@ -124,6 +124,12 @@ h1, h2, h3 { margin: 0; }
 .viewbar .sub { font-size: 13px; color: var(--ink-soft); margin-top: 6px; }
 .viewbar .spacer { flex: 1; }
 
+.view-content { animation: view-fade-in 0.35s ease; }
+@keyframes view-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .section-pad { padding-top: 26px; }
 
 /* =====================  KPI TILES  ===================== */
@@ -209,6 +215,7 @@ h1, h2, h3 { margin: 0; }
 .agenda-right .prog small { font-family: var(--ff-mono); font-size: 11px; color: var(--ink-soft); min-width: 30px; text-align: right; }
 .agenda-unplanned { margin-top: 4px; }
 .agenda-unplanned .uhead { font-size: 12px; font-family: var(--ff-mono); color: var(--st-decide); padding: 8px 0 10px; display: flex; align-items: center; gap: 8px; }
+.agenda-unplanned .agenda-items { padding-bottom: 4px; }
 
 /* =====================  SUBJECT CARD (studie)  ===================== */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; align-items: start; }
@@ -219,6 +226,17 @@ h1, h2, h3 { margin: 0; }
 }
 .card:hover { box-shadow: var(--shadow-md); }
 .card.is-done { opacity: 0.96; }
+.card.is-complete {
+  border-color: color-mix(in oklab, var(--c) 42%, var(--line));
+  box-shadow: var(--shadow-md), 0 0 0 1px color-mix(in oklab, var(--c) 12%, transparent);
+}
+.card.is-complete .card-badge { animation: badge-glow 2.4s ease-in-out infinite; }
+.complete-banner {
+  font-size: 11.5px; font-weight: 700; color: var(--c); letter-spacing: 0.02em;
+  margin-bottom: 8px; padding: 5px 9px; border-radius: 7px;
+  background: color-mix(in oklab, var(--c) 10%, var(--paper));
+  animation: fade-slide-in 0.4s ease;
+}
 .card-top { display: flex; gap: 13px; padding: 16px 17px 12px; align-items: flex-start; }
 .card-badge { width: 44px; height: 44px; flex: none; border-radius: 12px; background: var(--c); color: #fff; display: grid; place-items: center; font-family: var(--ff-display); font-weight: 700; font-size: 17px; }
 .card-head { flex: 1; min-width: 0; }
@@ -255,6 +273,7 @@ h1, h2, h3 { margin: 0; }
 .box svg { width: 12px; height: 12px; opacity: 0; transform: scale(0.5); transition: all 0.14s ease; }
 .check[data-on="true"] .box { background: var(--c); border-color: var(--c); }
 .check[data-on="true"] .box svg { opacity: 1; transform: scale(1); }
+.check .box.fx-pop { animation: check-pop 0.38s cubic-bezier(0.34, 1.4, 0.64, 1); }
 .check-label { font-size: 14px; line-height: 1.35; }
 .check[data-on="true"] .check-label { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--line-2); }
 
@@ -322,6 +341,41 @@ h1, h2, h3 { margin: 0; }
 .v6-nh { display: inline-block; margin-top: 6px; font-size: 10.5px; font-weight: 700; color: var(--st-decide); background: color-mix(in oklab, var(--st-decide) 11%, var(--paper)); padding: 2px 7px; border-radius: 5px; }
 .v6-defer-note { margin: 0 16px 14px; font-size: 12px; color: var(--st-defer); background: color-mix(in oklab, var(--st-defer) 9%, var(--paper)); border-radius: 8px; padding: 8px 11px; display: flex; gap: 7px; align-items: center; }
 
+/* =====================  EINDEXAMENS (CE)  ===================== */
+.ce-banner {
+  display: flex; gap: 14px; align-items: flex-start; padding: 15px 17px;
+  border-radius: var(--r-md); border: 1px solid var(--line); background: var(--paper); box-shadow: var(--shadow-sm);
+  margin-bottom: 16px;
+}
+.ce-banner .ic { width: 34px; height: 34px; border-radius: 9px; flex: none; display: grid; place-items: center; background: color-mix(in oklab, var(--ink) 8%, var(--paper)); color: var(--ink-soft); }
+.ce-banner .ic svg { width: 19px; height: 19px; }
+.ce-banner .at { font-family: var(--ff-display); font-size: 15.5px; letter-spacing: -0.01em; }
+.ce-banner .ad { font-size: 13.5px; color: var(--ink-soft); margin-top: 3px; max-width: 78ch; }
+.ce-banner .ad b { color: var(--ink); font-weight: 700; }
+
+.ce-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.ce-card {
+  display: flex; align-items: center; gap: 12px; padding: 13px 15px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm); border-left: 4px solid var(--c);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  animation: card-rise 0.45s ease both;
+  animation-delay: calc(var(--i, 0) * 40ms);
+}
+.ce-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.ce-badge {
+  width: 38px; height: 38px; border-radius: 10px; background: var(--c); color: #fff;
+  display: grid; place-items: center; font-family: var(--ff-display); font-weight: 700; font-size: 14px; flex: none;
+}
+.ce-body { flex: 1; min-width: 0; }
+.ce-name { font-family: var(--ff-display); font-size: 15px; letter-spacing: -0.01em; }
+.ce-meta { display: flex; gap: 10px; font-size: 11.5px; color: var(--ink-soft); margin-top: 2px; }
+.ce-meta .mono { font-family: var(--ff-mono); font-size: 11px; }
+.ce-tag {
+  font-family: var(--ff-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 7px; border-radius: 6px; background: var(--ink); color: var(--paper);
+}
+
 /* =====================  CIJFERS  ===================== */
 .gr-list { display: flex; flex-direction: column; gap: 11px; }
 .gr-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden; transition: box-shadow 0.16s ease; }
@@ -376,6 +430,109 @@ h1, h2, h3 { margin: 0; }
 /* mobiele rail-toggle (verborgen op desktop) */
 .rail-toggle { display: none; }
 
+/* =====================  COUNTDOWN STRIP  ===================== */
+.countdown-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  margin-top: 14px; padding: 14px 18px; border-radius: var(--r-md);
+  background: var(--ink); color: var(--paper); border: 1px solid var(--ink);
+  box-shadow: var(--shadow-md); animation: fade-slide-in 0.5s ease;
+}
+.cs-label { font-size: 13.5px; color: rgba(255,253,249,0.88); display: flex; align-items: center; gap: 9px; }
+.cs-label .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; animation: pulse-dot 1.8s ease infinite; }
+.cs-label b { color: var(--gold); }
+.cs-clock { display: flex; gap: 10px; }
+.cs-unit { text-align: center; min-width: 42px; }
+.cs-unit b {
+  font-family: var(--ff-display); font-size: 26px; line-height: 1; display: block;
+  font-variant-numeric: tabular-nums;
+}
+.cs-unit span { font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,253,249,0.55); }
+
+/* =====================  GRID ENTRANCE  ===================== */
+.grid-cell { animation: card-rise 0.45s ease both; animation-delay: calc(var(--i, 0) * 55ms); }
+
+/* =====================  KPI CELEBRATION  ===================== */
+.kpi.celebrate { animation: kpi-glow 2s ease-in-out infinite; }
+.kpi-sparkle {
+  position: absolute; top: 12px; right: 14px; font-size: 18px; color: var(--gold);
+  animation: sparkle-spin 3s linear infinite;
+}
+
+/* =====================  FX: TOAST & CANVAS  ===================== */
+#fx-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
+.fx-toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+  z-index: 210; pointer-events: none; opacity: 0;
+  background: var(--ink); color: var(--paper); font-size: 14px; font-weight: 600;
+  padding: 12px 22px; border-radius: 999px; box-shadow: var(--shadow-lg);
+  transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1);
+  white-space: nowrap; max-width: calc(100vw - 40px); overflow: hidden; text-overflow: ellipsis;
+}
+.fx-toast[data-show="true"] { opacity: 1; transform: translateX(-50%) translateY(0); }
+.fx-toast[data-kind="mega"] {
+  background: color-mix(in oklab, var(--gold) 85%, var(--ink));
+  color: var(--ink); font-family: var(--ff-display); font-size: 15px;
+  animation: toast-bounce 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+/* =====================  FX: MICRO-ANIMATIONS  ===================== */
+.fx-wiggle { animation: card-wiggle 0.65s ease; }
+.fx-shake { animation: badge-shake 0.5s ease; }
+
+.shell[data-all-done="true"] .viewbar h1::after {
+  content: " ✦"; color: var(--gold); animation: sparkle-spin 4s linear infinite; display: inline-block;
+}
+
+/* =====================  KEYFRAMES  ===================== */
+@keyframes check-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.28); }
+  100% { transform: scale(1); }
+}
+@keyframes card-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-1.2deg) scale(1.01); }
+  40% { transform: rotate(1deg); }
+  60% { transform: rotate(-0.6deg); }
+  80% { transform: rotate(0.4deg); }
+}
+@keyframes badge-glow {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--c) 0%, transparent); }
+  50% { box-shadow: 0 0 0 6px color-mix(in oklab, var(--c) 18%, transparent); }
+}
+@keyframes badge-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(1px); }
+}
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes kpi-glow {
+  0%, 100% { box-shadow: var(--shadow-sm); }
+  50% { box-shadow: 0 0 0 2px color-mix(in oklab, var(--gold) 40%, transparent), var(--shadow-md); }
+}
+@keyframes sparkle-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+@keyframes toast-bounce {
+  0% { transform: translateX(-50%) translateY(20px) scale(0.9); }
+  60% { transform: translateX(-50%) translateY(-4px) scale(1.03); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
+
 /* =====================  RESPONSIVE  ===================== */
 @media (max-width: 1080px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
@@ -397,8 +554,20 @@ h1, h2, h3 { margin: 0; }
   .agenda-right { grid-column: 1 / -1; justify-self: start; }
   .gr-main { grid-template-columns: 40px 1fr auto; }
   .gr-chips { display: none; }
+  .countdown-strip { flex-direction: column; align-items: flex-start; }
+  .cs-clock { width: 100%; justify-content: space-between; }
+  .ce-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 520px) {
   .kpis { grid-template-columns: 1fr 1fr; }
   .viewbar h1 { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  #fx-canvas { display: none; }
 }
